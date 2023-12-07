@@ -64,7 +64,7 @@ class PDSCH_Decoder
 {
 public:
     PDSCH_Decoder(uint32_t idx, 
-                  LTESniffer_pcap_writer *pcapwriter, 
+                  gAttack_pcap_writer *pcapwriter, 
                   MCSTracking *mcs_tracking,
                   RNTIManager& rntiManager,
                   HARQ *harq,
@@ -79,7 +79,7 @@ public:
                   std::vector<DL_Sniffer_DCI_DL> &ran_dl_collection,
                   uint32_t sfn,
                   uint32_t sf_idx,
-                  LTESniffer_pcap_writer *pcapwriter,
+                  gAttack_pcap_writer *pcapwriter,
                   srsran_pdsch_res_t *pdsch_res,
                   srsran_pdsch_cfg_t *pdsch_cfg);
 
@@ -92,7 +92,7 @@ public:
                            uint32_t sfn,
                            uint32_t sf_idx);
     void unpack_pdsch_message(uint8_t* sdu_ptr, int length);
-    int  decode_rrc_connection_setup(uint8_t* sdu_ptr, int length, ltesniffer_ue_spec_config_t *ue_config);                       
+    int  decode_rrc_connection_setup(uint8_t* sdu_ptr, int length, gAttack_ue_spec_config_t *ue_config);                       
     int  decode_imsi_tmsi_paging(uint8_t* sdu_ptr, int length);
 
     int  run_decode(int &mimo_ret,
@@ -129,7 +129,7 @@ public:
     }
 
     asn1::rrc::rrc_conn_setup_r8_ies_s get_rrc_con_set() {return rrc_con_set;}
-    ltesniffer_ue_spec_config_t        get_default_ue_config() {return default_ue_spec_config;}
+    gAttack_ue_spec_config_t        get_default_ue_config() {return default_ue_spec_config;}
     
     std::string dci_format(int format);
     std::string mod_sche(int sche);
@@ -166,7 +166,7 @@ private:
     bool                               found_con_ret = false;
     asn1::rrc::rrc_conn_setup_r8_ies_s rrc_con_set;
     bool                               has_default_config = false;
-    ltesniffer_ue_spec_config_t        default_ue_spec_config = {};
+    gAttack_ue_spec_config_t        default_ue_spec_config = {};
     /*Index of worker and subframe timing*/
     uint32_t idx; 
     uint32_t sf_idx;
@@ -179,7 +179,7 @@ private:
     std::vector<DL_Sniffer_DCI_DL>  *ran_dl_collection;
     srsran_pdsch_res_t              *pdsch_res;
     srsran_pdsch_cfg_t              *pdsch_cfg; //buffer
-    LTESniffer_pcap_writer          *pcapwriter;
+    gAttack_pcap_writer          *pcapwriter;
     RNTIManager                     &rntiManager;
     int                             mcs_tracking_mode;
     MCSTracking                     *mcs_tracking;

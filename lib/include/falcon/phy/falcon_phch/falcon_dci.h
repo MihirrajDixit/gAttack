@@ -132,7 +132,7 @@ typedef struct {
   srsran_dci_dl_t      *ran_dl_dci;
   srsran_pdsch_grant_t *ran_dl_grant;
   srsran_pdsch_grant_t *ran_dl_grant256;
-} ltesniffer_dci_grant_containter_t;
+} gAttack_dci_grant_containter_t;
 
 SRSRAN_API int falcon_dci_index_of_format_in_list(srsran_dci_format_t format,
                                                   const srsran_dci_format_t* format_list,
@@ -146,7 +146,7 @@ SRSRAN_API int srsran_dci_msg_to_trace_timestamp(srsran_dci_msg_t *msg,
                    uint16_t msg_rnti,
                    uint32_t nof_prb,
                    uint32_t nof_ports,
-                   ltesniffer_dci_grant_containter_t *container,
+                   gAttack_dci_grant_containter_t *container,
                    dl_sniffer_mcs_table_t mcs_table,
                    uint32_t sf_idx,
                    uint32_t sfn,

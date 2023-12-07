@@ -13,6 +13,7 @@ struct Args {
   bool        disable_cfo;
   uint32_t    time_offset;
   int         force_N_id_2;
+  int         attack_mode;
   std::string input_file_name = "";
   std::string dci_file_name = "";
   std::string stats_file_name = "";
@@ -33,6 +34,7 @@ struct Args {
   double      ul_freq = 0;
   int         sniffer_mode = DL_MODE;
   bool        en_debug = false;
+  int         file_input = 0;
 
   // other config args
   uint32_t    dci_format_split_update_interval_ms;

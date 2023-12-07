@@ -19,7 +19,7 @@ public:
                  uint32_t max_prb,
                  PhyCommon& common,
                  DCIMetaFormats& metaFormats,
-                 LTESniffer_pcap_writer *pcapwriter,
+                 gAttack_pcap_writer *pcapwriter,
                  MCSTracking *mcs_tracking,
                  HARQ *harq,
                  int mcs_tracking_mode, 
@@ -64,7 +64,7 @@ private:
   bool                  updateMetaFormats;
   bool                  collision_dw, collision_up;
   DCIBlindSearchStats   stats;
-  LTESniffer_pcap_writer *pcapwriter;
+  gAttack_pcap_writer *pcapwriter;
   PDSCH_Decoder         *pdschdecoder;
   int                   mcs_tracking_mode;
   MCSTracking           *mcs_tracking;

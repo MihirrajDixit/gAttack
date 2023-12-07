@@ -40,7 +40,7 @@ typedef struct SRSRAN_API
     float                       p_a           = 0; // downlink pdsch power allocation from RRC Con Set
     srsran_uci_offset_cfg_t     uci_config    = {0};
     srsran_cqi_cfg_t            cqi_config    = {0};
-} ltesniffer_ue_spec_config_t;
+} gAttack_ue_spec_config_t;
 
 
 typedef struct SRSRAN_API
@@ -63,7 +63,7 @@ typedef struct SRSRAN_API
     uint32_t mcs_sc[DL_SNIFFER_NOF_MCS] ={0};
     dl_sniffer_mcs_table_t      mcs_table = DL_SNIFFER_UNKNOWN_TABLE;
     bool                        has_ue_config = false;
-    ltesniffer_ue_spec_config_t ue_spec_config;
+    gAttack_ue_spec_config_t ue_spec_config;
 } dl_sniffer_mcs_tracking_t;
 
 typedef struct SRSRAN_API
@@ -84,7 +84,7 @@ typedef struct SRSRAN_API
     uint32_t mcs_sc[DL_SNIFFER_NOF_MCS] ={0};
     ul_sniffer_mod_tracking_t   mcs_mod = UL_SNIFFER_UNKNOWN_MOD;
     bool                        has_ue_config = false;
-    ltesniffer_ue_spec_config_t ue_spec_config;
+    gAttack_ue_spec_config_t ue_spec_config;
     std::vector<float>          snr;
     std::vector<float>          ta;
 } ul_sniffer_tracking_t;
@@ -131,9 +131,9 @@ public:
                             srsran_pdsch_grant_t *statistic_grant);
     
     /*Manage UE-specific-configuration*/
-    void                        update_ue_config_rnti(uint16_t rnti, ltesniffer_ue_spec_config_t ue_spec_config);
-    ltesniffer_ue_spec_config_t get_ue_config_rnti(uint16_t rnti);
-    void                        update_default_ue_config(ltesniffer_ue_spec_config_t ue_spec_config);
+    void                        update_ue_config_rnti(uint16_t rnti, gAttack_ue_spec_config_t ue_spec_config);
+    gAttack_ue_spec_config_t get_ue_config_rnti(uint16_t rnti);
+    void                        update_default_ue_config(gAttack_ue_spec_config_t ue_spec_config);
     
     double      get_interval() { return interval;}
     uint16_t    get_target_rnti(){ return target_rnti;}
@@ -166,7 +166,7 @@ private:
     bool        has_default_ue_spec_config        = false;
     std::atomic<float>                            &est_cfo;
     std::atomic<int>                              nof_api_msg{0};
-    ltesniffer_ue_spec_config_t                   default_ue_spec_config = {};
+    gAttack_ue_spec_config_t                   default_ue_spec_config = {};
     std::map<uint16_t, ul_sniffer_tracking_t>     tracking_database_ul_mode;
     std::map<uint16_t, ul_sniffer_tracking_t>     all_database_ul_mode;
     std::map<uint16_t, dl_sniffer_mcs_tracking_t> tracking_database_dl_mode;

@@ -83,12 +83,12 @@ int srsran_rf_recv_wrapper( void* h,
                             uint32_t nsamples, 
                             srsran_timestamp_t* t);
 
-class LTESniffer_Core : public SignalHandler {
+class gAttack_Core : public SignalHandler {
 public:
-  LTESniffer_Core(const Args& args);
-  LTESniffer_Core(const LTESniffer_Core&) = delete; //prevent copy
-  LTESniffer_Core& operator=(const LTESniffer_Core&) = delete; //prevent copy
-  virtual ~LTESniffer_Core() override;
+  gAttack_Core(const Args& args);
+  gAttack_Core(const gAttack_Core&) = delete; //prevent copy
+  gAttack_Core& operator=(const gAttack_Core&) = delete; //prevent copy
+  virtual ~gAttack_Core() override;
   
   RNTIManager &getRNTIManager();
   void setDCIConsumer(std::shared_ptr<SubframeInfoConsumer> consumer);
@@ -110,7 +110,7 @@ private:
   enum receiver_state     { DECODE_MIB, DECODE_PDSCH} state;
   std::mutex              harq_map_mutex;
   Phy                     *phy;
-  LTESniffer_pcap_writer  pcapwriter;
+  gAttack_pcap_writer  pcapwriter;
   srsran::mac_pcap        mac_pcap;
   int                     mcs_tracking_mode;
   MCSTracking             mcs_tracking;

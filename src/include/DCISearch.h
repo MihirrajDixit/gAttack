@@ -13,7 +13,7 @@ typedef struct SRSRAN_API{
     int                         format = -1;
     dci_candidate_t             cand = {};
     bool                        added = false;
-} ltesniffer_accepted_dci_t;
+} gAttack_accepted_dci_t;
 
 class DCISearch {
 public:
@@ -59,5 +59,5 @@ private:
     uint32_t sfn;
     DCIBlindSearchStats stats;
     bool enableShortcutDiscovery;
-    std::vector<ltesniffer_accepted_dci_t> temp_dci0;
+    std::vector<gAttack_accepted_dci_t> temp_dci0;
 };

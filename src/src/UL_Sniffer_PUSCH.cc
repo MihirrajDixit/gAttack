@@ -15,7 +15,7 @@ PUSCH_Decoder::PUSCH_Decoder(srsran_enb_ul_t &enb_ul,
                              cf_t **original_buffer,
                              cf_t **buffer_offset,
                              srsran_ul_cfg_t &ul_cfg,
-                             LTESniffer_pcap_writer *pcapwriter,
+                             gAttack_pcap_writer *pcapwriter,
                              MCSTracking *mcstracking,
                              bool en_debug) : enb_ul(enb_ul),
                                               ul_sf(ul_sf),
@@ -430,7 +430,7 @@ void PUSCH_Decoder::decode()
                 // ul_cfg.pusch.uci_cfg.cqi.rank_is_not_one            = (decoding_mem.nof_ack == 2)?true:false;
 
                 /*get UE-specific configuration from database*/
-                ltesniffer_ue_spec_config_t ue_config = mcstracking->get_ue_config_rnti(decoding_mem.rnti);
+                gAttack_ue_spec_config_t ue_config = mcstracking->get_ue_config_rnti(decoding_mem.rnti);
                 ul_cfg.pusch.uci_cfg.cqi.type = ue_config.cqi_config.type;
                 ul_cfg.pusch.uci_offset = ue_config.uci_config;
                 /*If eNB requests for Aperiodic CSI report*/

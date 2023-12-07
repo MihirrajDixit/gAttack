@@ -3,7 +3,7 @@
 float p_a_array[8]{-6, -4.77, -3, -1.77, 0, 1, 2, 3};
 
 PDSCH_Decoder::PDSCH_Decoder(uint32_t idx,
-							 LTESniffer_pcap_writer *pcapwriter,
+							 gAttack_pcap_writer *pcapwriter,
 							 MCSTracking *mcs_tracking,
 							 RNTIManager &rntiManager,
 							 HARQ *harq,
@@ -126,7 +126,7 @@ int PDSCH_Decoder::decode_imsi_tmsi_paging(uint8_t *sdu_ptr, int length)
 	return ret;
 }
 
-int PDSCH_Decoder::decode_rrc_connection_setup(uint8_t *sdu_ptr, int length, ltesniffer_ue_spec_config_t *ue_config)
+int PDSCH_Decoder::decode_rrc_connection_setup(uint8_t *sdu_ptr, int length, gAttack_ue_spec_config_t *ue_config)
 {
 	dl_ccch_msg_s dl_ccch_msg;
 	asn1::cbit_ref bref(sdu_ptr, length);
@@ -250,7 +250,7 @@ int PDSCH_Decoder::run_decode(int &mimo_ret,
 						int payload_length = pdu.get()->get_payload_size();
 						uint8_t *sdu_ptr = pdu.get()->get_sdu_ptr();
 						/* Decode RRC Connection Setup when found valid sdu from MAC pdu*/
-						ltesniffer_ue_spec_config_t ue_config;
+						gAttack_ue_spec_config_t ue_config;
 						int rrc_ret = decode_rrc_connection_setup(sdu_ptr, payload_length, &ue_config);
 						if (rrc_ret == SRSRAN_SUCCESS)
 						{ // success means RRC Connection Setup
@@ -789,7 +789,7 @@ int PDSCH_Decoder::decode_dl_mode()
 			{
 				pdsch_res[tb].crc = false;
 			}
-			ltesniffer_ue_spec_config_t ue_config = mcs_tracking->get_ue_config_rnti(cur_rnti); // find p_a from database
+			gAttack_ue_spec_config_t ue_config = mcs_tracking->get_ue_config_rnti(cur_rnti); // find p_a from database
 			pdsch_cfg->p_a = ue_config.p_a;														// update p_a from database
 			bool tb_en[SRSRAN_MAX_CODEWORDS]{cur_grant->tb[0].enabled, cur_grant->tb[1].enabled};
 			int mimo_ret = SRSRAN_SUCCESS;
@@ -920,7 +920,7 @@ int PDSCH_Decoder::decode_dl_mode()
 										int payload_length = pdu.get()->get_payload_size();
 										uint8_t *sdu_ptr = pdu.get()->get_sdu_ptr();
 										/* Decode RRC Connection Setup to obtain UE Specific Configuration*/
-										ltesniffer_ue_spec_config_t ue_config = {};
+										gAttack_ue_spec_config_t ue_config = {};
 										int rrc_ret = decode_rrc_connection_setup(sdu_ptr, payload_length, &ue_config);
 										if (rrc_ret == SRSRAN_SUCCESS)
 										{ // success means RRC Connection Setup
@@ -1007,7 +1007,7 @@ int PDSCH_Decoder::decode_dl_mode()
 										int payload_length = pdu.get()->get_payload_size();
 										uint8_t *sdu_ptr = pdu.get()->get_sdu_ptr();
 										/* Decode RRC Connection Setup to obtain UE Specific Configuration*/
-										ltesniffer_ue_spec_config_t ue_config = {};
+										gAttack_ue_spec_config_t ue_config = {};
 										int rrc_ret = decode_rrc_connection_setup(sdu_ptr, payload_length, &ue_config);
 										if (rrc_ret == SRSRAN_SUCCESS)
 										{ // success means RRC Connection Setup

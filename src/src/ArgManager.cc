@@ -76,6 +76,7 @@ void ArgManager::usage(Args& args, const std::string& prog) {
 #else
   printf("\t   RF is disabled.\n");
 #endif
+  printf("\t-b Attack Mode [1 - zmq, 2 - RACH TA]\n", args.attack_mode);
   printf("\t-i input_file [Default use RF board] (default disable)\n");
   printf("\t-D output filename for DCI [default stdout]\n");
   printf("\t-o offset frequency correction (in Hz) for input file [Default %.1f Hz]\n", args.file_offset_freq);
@@ -107,7 +108,7 @@ void ArgManager::usage(Args& args, const std::string& prog) {
 void ArgManager::parseArgs(Args& args, int argc, char **argv) {
   int opt;
   defaultArgs(args);
-  while ((opt = getopt(argc, argv, "aAcCDdEfghHilLnpPrRsStTvwWyYqFIuUmOoz")) != -1) {
+  while ((opt = getopt(argc, argv, "aAbcCDdEfghHilLnpPrRsStTvwWyYqFIuUmOoz")) != -1) {
     switch (opt) {
       case 'a':
         args.rf_args = argv[optind];
@@ -115,6 +116,8 @@ void ArgManager::parseArgs(Args& args, int argc, char **argv) {
       case 'A':
         args.rf_nof_rx_ant = static_cast<uint32_t>(strtoul(argv[optind], nullptr, 0));
         break;
+      case 'b':
+        args.attack_mode = atoi(argv[optind]);
       case 'g':
         args.rf_gain = strtod(argv[optind], nullptr);
         break;

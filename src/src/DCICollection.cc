@@ -168,7 +168,7 @@ void DCICollection::addCandidate(dci_candidate_t& cand,
     hopping_cfg.n_rb_ho = ulsche->sib2.rr_cfg_common.pusch_cfg_common.pusch_cfg_basic.pusch_hop_offset;
   }
 
-  ltesniffer_dci_grant_containter_t dci_grant_container{dci_dl->dl_dci_unpacked.get(),
+  gAttack_dci_grant_containter_t dci_grant_container{dci_dl->dl_dci_unpacked.get(),
                                                         dci_ul->ul_dci_unpacked.get(),
                                                         dci_dl->dl_grant.get(),
                                                         dci_ul->ul_grant.get(),

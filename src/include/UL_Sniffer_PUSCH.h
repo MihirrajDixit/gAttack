@@ -50,7 +50,7 @@ public:
                   cf_t** original_buffer,
                   cf_t** buffer_offset,
                   srsran_ul_cfg_t    &ul_cfg,
-                  LTESniffer_pcap_writer *pcapwriter,
+                  gAttack_pcap_writer *pcapwriter,
                   MCSTracking *mcstracking,
                   bool en_debug);
     ~PUSCH_Decoder();
@@ -118,7 +118,7 @@ private:
 
     srsran_enb_ul_t         &enb_ul;
     srsran_ul_sf_cfg_t      &ul_sf;
-    LTESniffer_pcap_writer  *pcapwriter;
+    gAttack_pcap_writer  *pcapwriter;
     srsran_pusch_res_t      pusch_res           = {};
     srsran_ul_cfg_t         &ul_cfg;
 

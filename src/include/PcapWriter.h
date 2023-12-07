@@ -26,10 +26,10 @@ private:
 };
 
 // Define a new class for not creating a new thread of pcap
-class LTESniffer_pcap_writer
+class gAttack_pcap_writer
 {
 public:
-    LTESniffer_pcap_writer() {enable_write=false; ue_id=0; pcap_file = NULL; };
+    gAttack_pcap_writer() {enable_write=false; ue_id=0; pcap_file = NULL; };
     void enable(bool en);
     void open(const std::string filename, const std::string api_filename, uint32_t ue_id = 0);
     void close();

@@ -28,7 +28,7 @@ public:
       bool skipSecondaryMetaFormats,
       double metaFormatSplitRatio,
       uint32_t histogramThreshold,
-      LTESniffer_pcap_writer *pcapwriter,
+      gAttack_pcap_writer *pcapwriter,
       MCSTracking *mcs_tracking, 
       HARQ *harq,
       int mcs_tracking_mode,

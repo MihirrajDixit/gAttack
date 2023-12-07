@@ -9,7 +9,6 @@ cmake_minimum_required (VERSION 2.8.11)
 project (DL_Sniffer)
 
 #set (CMAKE_INSTALL_PREFIX /usr/local)
-
 #message("CIP = ${CMAKE_INSTALL_PREFIX} (should be /usr/local")
 
 #######################################################################

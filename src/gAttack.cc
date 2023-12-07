@@ -1,6 +1,6 @@
 
 #include "include/ArgManager.h"
-#include "include/LTESniffer_Core.h"
+#include "include/gAttack_Core.h"
 
 #include "falcon/common/Version.h"
 #include "falcon/common/SignalManager.h"
@@ -14,7 +14,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
   cout << endl;
-  cout << "LTESniffer" << endl;
+  cout << "gAttack" << endl;
   cout << endl;
 
   Args args;
@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
   SignalGate& signalGate(SignalGate::getInstance());
   signalGate.init();
 
-  LTESniffer_Core SnifferCore(args);
+  gAttack_Core SnifferCore(args);
   signalGate.attach(SnifferCore);
 
   bool success = SnifferCore.run();

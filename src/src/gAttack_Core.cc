@@ -12,7 +12,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <include/SubframeBuffer.h>
-#include "include/LTESniffer_Core.h"
+#include "include/gAttack_Core.h"
 
 // include C-only headers
 #ifdef __cplusplus
@@ -31,7 +31,7 @@
 #define ENABLE_AGC_DEFAULT
 using namespace std;
 
-LTESniffer_Core::LTESniffer_Core(const Args& args):
+gAttack_Core::gAttack_Core(const Args& args):
   go_exit(false),
   args(args),
   state(DECODE_MIB),
@@ -61,9 +61,9 @@ LTESniffer_Core::LTESniffer_Core(const Args& args):
   std::string pcap_file_name;
   std::string pcap_file_name_api = "api_collector.pcap";
   if (sniffer_mode == DL_MODE){
-    pcap_file_name = "ltesniffer_dl_mode.pcap";
+    pcap_file_name = "gAttack_dl_mode.pcap";
   } else {
-    pcap_file_name = "ltesniffer_ul_mode.pcap";
+    pcap_file_name = "gAttack_ul_mode.pcap";
   }
   pcapwriter.open(pcap_file_name, pcap_file_name_api, 0);
   /*Init HARQ*/
@@ -104,7 +104,7 @@ LTESniffer_Core::LTESniffer_Core(const Args& args):
   }
 }
 
-bool LTESniffer_Core::run(){
+bool gAttack_Core::run(){
   cell_search_cfg_t cell_detect_config = {.max_frames_pbch    = SRSRAN_DEFAULT_MAX_FRAMES_PBCH,
                                         .max_frames_pss       = SRSRAN_DEFAULT_MAX_FRAMES_PSS,
                                         .nof_valid_pss_frames = SRSRAN_DEFAULT_NOF_VALID_PSS_FRAMES,
@@ -569,16 +569,16 @@ bool LTESniffer_Core::run(){
   return EXIT_SUCCESS;
 }
 
-void LTESniffer_Core::stop() {
-  cout << "LTESniffer_Core: Exiting..." << endl;
+void gAttack_Core::stop() {
+  cout << "gAttack_Core: Exiting..." << endl;
   go_exit = true;
 }
 
-void LTESniffer_Core::handleSignal() {
+void gAttack_Core::handleSignal() {
   stop();
 }
 
-LTESniffer_Core::~LTESniffer_Core(){
+gAttack_Core::~gAttack_Core(){
   pcapwriter.close();
   // delete        harq_map;
   // harq_map    = nullptr;
@@ -600,27 +600,27 @@ int srsran_rf_recv_wrapper( void* h,
   return srsran_rf_recv_with_time_multi((srsran_rf_t*)h, ptr, nsamples, true, NULL, NULL);
 }
 
-void LTESniffer_Core::setDCIConsumer(std::shared_ptr<SubframeInfoConsumer> consumer) {
+void gAttack_Core::setDCIConsumer(std::shared_ptr<SubframeInfoConsumer> consumer) {
   phy->getCommon().setDCIConsumer(consumer);
 }
 
-void LTESniffer_Core::resetDCIConsumer() {
+void gAttack_Core::resetDCIConsumer() {
   phy->getCommon().resetDCIConsumer();
 }
 
-RNTIManager& LTESniffer_Core::getRNTIManager(){
+RNTIManager& gAttack_Core::getRNTIManager(){
   return phy->getCommon().getRNTIManager();
 }
 
-void LTESniffer_Core::refreshShortcutDiscovery(bool val){
+void gAttack_Core::refreshShortcutDiscovery(bool val){
   phy->getCommon().setShortcutDiscovery(val);
 }
 
-void LTESniffer_Core::setRNTIThreshold(int val){
+void gAttack_Core::setRNTIThreshold(int val){
   if(phy){phy->getCommon().getRNTIManager().setHistogramThreshold(val);}
 }
 
-void LTESniffer_Core::print_api_header(){
+void gAttack_Core::print_api_header(){
   for (int i = 0; i < 90; i++){
       std::cout << "-";
   }

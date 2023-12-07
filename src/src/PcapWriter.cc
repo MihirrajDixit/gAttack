@@ -68,11 +68,11 @@ void PcapWriter::pcap_write_crnti(uint8_t* pdu,
 
 
 //New class:
-void LTESniffer_pcap_writer::enable(bool en)
+void gAttack_pcap_writer::enable(bool en)
 {
   enable_write = true; 
 }
-void LTESniffer_pcap_writer::open(const std::string filename, const std::string api_filename, uint32_t ue_id)
+void gAttack_pcap_writer::open(const std::string filename, const std::string api_filename, uint32_t ue_id)
 {
   pcap_file       = DLT_PCAP_Open(MAC_LTE_DLT, filename.c_str());
   pcap_file_api   = DLT_PCAP_Open(MAC_LTE_DLT, api_filename.c_str());
@@ -80,17 +80,17 @@ void LTESniffer_pcap_writer::open(const std::string filename, const std::string 
   enable_write    = true;
 }
 
-void LTESniffer_pcap_writer::close()
+void gAttack_pcap_writer::close()
 {
   fprintf(stdout, "Saving MAC PCAP file\n");
   DLT_PCAP_Close(pcap_file);
 }
 
-void LTESniffer_pcap_writer::set_ue_id(uint16_t ue_id) {
+void gAttack_pcap_writer::set_ue_id(uint16_t ue_id) {
   this->ue_id = ue_id;
 }
 
-void LTESniffer_pcap_writer::pack_and_write(uint8_t* pdu, uint32_t pdu_len_bytes, uint32_t reTX, bool crc_ok, uint32_t tti, 
+void gAttack_pcap_writer::pack_and_write(uint8_t* pdu, uint32_t pdu_len_bytes, uint32_t reTX, bool crc_ok, uint32_t tti, 
                               uint16_t crnti, uint8_t direction, uint8_t rnti_type)
 {
 
@@ -117,7 +117,7 @@ void LTESniffer_pcap_writer::pack_and_write(uint8_t* pdu, uint32_t pdu_len_bytes
   lock.unlock();
 }
 
-void LTESniffer_pcap_writer::pack_and_write_api(uint8_t* pdu, uint32_t pdu_len_bytes, uint32_t reTX, bool crc_ok, uint32_t tti, 
+void gAttack_pcap_writer::pack_and_write_api(uint8_t* pdu, uint32_t pdu_len_bytes, uint32_t reTX, bool crc_ok, uint32_t tti, 
                               uint16_t crnti, uint8_t direction, uint8_t rnti_type)
 {
 
@@ -144,47 +144,47 @@ void LTESniffer_pcap_writer::pack_and_write_api(uint8_t* pdu, uint32_t pdu_len_b
   lock.unlock();
 }
 
-void LTESniffer_pcap_writer::write_dl_crnti(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t rnti, bool crc_ok, uint32_t tti, bool retx)
+void gAttack_pcap_writer::write_dl_crnti(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t rnti, bool crc_ok, uint32_t tti, bool retx)
 {
   pack_and_write(pdu, pdu_len_bytes, retx, crc_ok, tti, rnti, DIRECTION_DOWNLINK, C_RNTI);
 }
 
-void LTESniffer_pcap_writer::write_dl_ranti(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t rnti, bool crc_ok, uint32_t tti)
+void gAttack_pcap_writer::write_dl_ranti(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t rnti, bool crc_ok, uint32_t tti)
 {
   pack_and_write(pdu, pdu_len_bytes, 0, crc_ok, tti, rnti, DIRECTION_DOWNLINK, RA_RNTI);
 }
 
-void LTESniffer_pcap_writer::write_dl_bch(uint8_t* pdu, uint32_t pdu_len_bytes, bool crc_ok, uint32_t tti)
+void gAttack_pcap_writer::write_dl_bch(uint8_t* pdu, uint32_t pdu_len_bytes, bool crc_ok, uint32_t tti)
 {
   pack_and_write(pdu, pdu_len_bytes, 0, crc_ok, tti, 0, DIRECTION_DOWNLINK, NO_RNTI);
 }
 
-void LTESniffer_pcap_writer::write_dl_pch(uint8_t* pdu, uint32_t pdu_len_bytes, bool crc_ok, uint32_t tti)
+void gAttack_pcap_writer::write_dl_pch(uint8_t* pdu, uint32_t pdu_len_bytes, bool crc_ok, uint32_t tti)
 {
   pack_and_write(pdu, pdu_len_bytes, 0, crc_ok, tti, SRSRAN_PRNTI, DIRECTION_DOWNLINK, P_RNTI);
 }
 
-void LTESniffer_pcap_writer::write_dl_sirnti(uint8_t* pdu, uint32_t pdu_len_bytes, bool crc_ok, uint32_t tti)
+void gAttack_pcap_writer::write_dl_sirnti(uint8_t* pdu, uint32_t pdu_len_bytes, bool crc_ok, uint32_t tti)
 {
   pack_and_write(pdu, pdu_len_bytes, 0, crc_ok, tti, SRSRAN_SIRNTI, DIRECTION_DOWNLINK, SI_RNTI);
 }
 
-void LTESniffer_pcap_writer::write_ul_crnti(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t crnti, uint32_t tti)
+void gAttack_pcap_writer::write_ul_crnti(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t crnti, uint32_t tti)
 {
   pack_and_write(pdu, pdu_len_bytes, 0, true, tti, crnti, DIRECTION_UPLINK, C_RNTI);
 }
 
-void LTESniffer_pcap_writer::write_ul_crnti_api(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t crnti, uint32_t tti)
+void gAttack_pcap_writer::write_ul_crnti_api(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t crnti, uint32_t tti)
 {
   pack_and_write_api(pdu, pdu_len_bytes, 0, true, tti, crnti, DIRECTION_UPLINK, C_RNTI);
 }
 
-void LTESniffer_pcap_writer::write_dl_crnti_api(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t rnti, bool crc_ok, uint32_t tti, bool retx)
+void gAttack_pcap_writer::write_dl_crnti_api(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t rnti, bool crc_ok, uint32_t tti, bool retx)
 {
   pack_and_write_api(pdu, pdu_len_bytes, retx, crc_ok, tti, rnti, DIRECTION_DOWNLINK, C_RNTI);
 }
 
-void LTESniffer_pcap_writer::write_dl_paging_api(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t rnti, bool crc_ok, uint32_t tti, bool retx)
+void gAttack_pcap_writer::write_dl_paging_api(uint8_t* pdu, uint32_t pdu_len_bytes, uint16_t rnti, bool crc_ok, uint32_t tti, bool retx)
 {
   pack_and_write_api(pdu, pdu_len_bytes, retx, crc_ok, tti, SRSRAN_PRNTI, DIRECTION_DOWNLINK, P_RNTI);
 }

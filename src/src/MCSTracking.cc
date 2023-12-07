@@ -1443,7 +1443,7 @@ void MCSTracking::write_csv_file(uint16_t rnti, dl_sniffer_mcs_tracking_t &stati
 
 /*__________________Manage UE Specific Configuation___________________*/
 
-void MCSTracking::update_ue_config_rnti(uint16_t rnti, ltesniffer_ue_spec_config_t ue_spec_config)
+void MCSTracking::update_ue_config_rnti(uint16_t rnti, gAttack_ue_spec_config_t ue_spec_config)
 {
     std::unique_lock<std::mutex> trackinglock(tracking_mutex);
     if (sniffer_mode == DL_MODE)
@@ -1479,10 +1479,10 @@ void MCSTracking::update_ue_config_rnti(uint16_t rnti, ltesniffer_ue_spec_config
     trackinglock.unlock();
 }
 
-ltesniffer_ue_spec_config_t MCSTracking::get_ue_config_rnti(uint16_t rnti)
+gAttack_ue_spec_config_t MCSTracking::get_ue_config_rnti(uint16_t rnti)
 {
     std::unique_lock<std::mutex> trackinglock(tracking_mutex);
-    ltesniffer_ue_spec_config_t ue_spec_config = {};
+    gAttack_ue_spec_config_t ue_spec_config = {};
     ue_spec_config = default_ue_spec_config;
     ue_spec_config.has_ue_config = false;
     if (sniffer_mode == DL_MODE)
@@ -1515,7 +1515,7 @@ ltesniffer_ue_spec_config_t MCSTracking::get_ue_config_rnti(uint16_t rnti)
     trackinglock.unlock();
 }
 
-void MCSTracking::update_default_ue_config(ltesniffer_ue_spec_config_t ue_spec_config)
+void MCSTracking::update_default_ue_config(gAttack_ue_spec_config_t ue_spec_config)
 {
     std::unique_lock<std::mutex> trackinglock(tracking_mutex);
     // printf("[CONFIG] Set default UE-specific configuration: P_a = %.2f, UCI Config: %d %d %d, CQI Config: %d\n",

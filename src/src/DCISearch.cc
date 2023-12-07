@@ -137,7 +137,7 @@ int DCISearch::inspect_dci_location_recursively(srsran_dci_msg_t *dci_msg,
       printf("Cand. %d (sfn %d.%d, ncce %d, L %d, f_idx %d)\n", &cand[format_idx].rnti, sfn, sf_idx, ncce, L, format_idx);
 #endif
       if (rntiManager.getActivationReason(cand[format_idx].rnti) == RM_ACT_RAR && cand[format_idx].dci_msg.format == 0){
-        ltesniffer_accepted_dci_t temp_dci;
+        gAttack_accepted_dci_t temp_dci;
         temp_dci.rnti   = cand[format_idx].rnti;
         temp_dci.L      = L;
         temp_dci.ncce   = ncce;
