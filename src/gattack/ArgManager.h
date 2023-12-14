@@ -18,6 +18,7 @@ struct Args {
   std::string dci_file_name = "";
   std::string stats_file_name = "";
   int         file_offset_time;
+  int         interface_mode;
   double      file_offset_freq;
   uint32_t    nof_prb;
   uint32_t    file_nof_prb;
@@ -28,6 +29,7 @@ struct Args {
   uint32_t    rf_nof_rx_ant;
   double      rf_freq;
   double      rf_gain;
+  double      rf_tx_gain;
   int         decimate;
   int         nof_sniffer_thread;
   uint32_t    cell_id = 0;

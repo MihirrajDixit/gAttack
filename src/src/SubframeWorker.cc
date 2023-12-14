@@ -1,6 +1,6 @@
-#include "include/SubframeWorker.h"
-#include "include/DCISearch.h"
-#include "include/SubframeInfo.h"
+#include "gattack/SubframeWorker.h"
+#include "gattack/DCISearch.h"
+#include "gattack/SubframeInfo.h"
 #include "falcon/prof/Lifetime.h"
 
 #include <iostream>
@@ -223,6 +223,7 @@ cf_t *SubframeWorker::getBuffer(uint32_t antenna_idx)
 
 void SubframeWorker::run_dl_mode(SubframeInfo &subframeInfo)
 {
+  printf("Entered RUN DL Mode\n");
   pdschdecoder->init_pdsch_decoder(&falcon_ue_dl,
                                    &dl_sf,
                                    &ue_dl_cfg,
@@ -235,6 +236,7 @@ void SubframeWorker::run_dl_mode(SubframeInfo &subframeInfo)
 
 void SubframeWorker::run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti)
 {
+  printf("Entered RUN UL Mode\n");
   if (!ulsche->get_config())
   {
     int sib_ret = SRSRAN_SUCCESS;
@@ -275,11 +277,12 @@ void SubframeWorker::run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti)
 
       /*RAR decode hopping config to convert dci 0 to ul grant*/
       pdschdecoder->set_hopping(ul_cfg.hopping);
-
+      printf("Entered SET RACH CONFIG\n");
       /*RACH detector config*/
       puschdecoder->set_rach_config(ulsche->get_prach_config());
       puschdecoder->set_configed();
     }
+
     if (puschdecoder->get_configed())
     {
       /*Decode DL messages but only TM1 as only having 1 antenna for DL*/

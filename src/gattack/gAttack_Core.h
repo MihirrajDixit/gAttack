@@ -24,9 +24,9 @@
 
 #include "ArgManager.h"
 #include "falcon/common/SignalManager.h"
-#include "include/SubframeWorker.h"
-#include "include/ThreadSafeQueue.h"
-#include "include/WorkerThread.h"
+#include "gattack/SubframeWorker.h"
+#include "gattack/ThreadSafeQueue.h"
+#include "gattack/WorkerThread.h"
 #include "Sniffer_dependency.h"
 #include "MCSTracking.h"
 #include "ULSchedule.h"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "falcon/phy/falcon_ue/falcon_ue_dl.h"
-#include "include/SubframeInfo.h"
+#include "gattack/SubframeInfo.h"
 #include "PhyCommon.h"
 #include "MetaFormats.h"
 #include "falcon/prof/Lifetime.h"

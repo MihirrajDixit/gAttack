@@ -11,8 +11,8 @@
 #include <strings.h>
 #include <sys/time.h>
 #include <unistd.h>
-#include <include/SubframeBuffer.h>
-#include "include/gAttack_Core.h"
+#include <gattack/SubframeBuffer.h>
+#include "gattack/gAttack_Core.h"
 
 // include C-only headers
 #ifdef __cplusplus
@@ -150,13 +150,22 @@ bool gAttack_Core::run(){
   /* If RF mode (not file mode)*/
 #ifndef DISABLE_RF
   if (args.input_file_name == "") {
-    printf("Opening RF device with %d RX antennas...\n", args.rf_nof_rx_ant);
     char rfArgsCStr[1024];
     strncpy(rfArgsCStr, args.rf_args.c_str(), 1024);
-    if (srsran_rf_open_multi(&rf, rfArgsCStr, args.rf_nof_rx_ant)) {
-      fprintf(stderr, "Error opening rf\n");
-      exit(-1);
+    if (args.interface_mode==1){
+      printf("Opening ZMQ Mode with %d RX antennas...\n", args.rf_nof_rx_ant);
+      if (srsran_rf_open_devname(&rf, "zmq", rfArgsCStr, args.rf_nof_rx_ant)) {
+        ERROR("Error opening RF ZMQ device");
+      return false;
+      }
+    }else if(args.interface_mode==2){
+      printf("Opening RF device with %d RX antennas...\n", args.rf_nof_rx_ant);
+      if (srsran_rf_open_multi(&rf, rfArgsCStr, args.rf_nof_rx_ant)) {
+        fprintf(stderr, "Error opening rf\n");
+        exit(-1);
+      }
     }
+
     /* Set receiver gain */
     if (args.rf_gain > 0) {
       srsran_rf_set_rx_gain(&rf, args.rf_gain);
@@ -169,6 +178,20 @@ bool gAttack_Core::run(){
       srsran_rf_set_rx_gain(&rf, srsran_rf_get_rx_gain(&rf));
       cell_detect_config.init_agc = srsran_rf_get_rx_gain(&rf);
     }
+
+    /* Added part - TX GAIN*/
+    if (args.rf_tx_gain > 0){
+      srsran_rf_set_tx_gain(&rf, args.rf_tx_gain);
+    } else {
+      printf("Starting AGC thread...\n");
+      if (srsran_rf_start_gain_thread(&rf, false)) {
+        ERROR("Error opening rf");
+        exit(-1);
+      }
+      srsran_rf_set_rx_gain(&rf, srsran_rf_get_rx_gain(&rf));
+    }
+
+
 
     /* set receiver frequency */
     if (sniffer_mode == UL_MODE && args.ul_freq != 0){
@@ -236,9 +259,12 @@ bool gAttack_Core::run(){
   }
 #endif
 
+
   /* If reading from file, go straight to PDSCH decoding. Otherwise, decode MIB first */
   if (args.input_file_name != "") {
     /* preset cell configuration */
+    printf("Reading from the file %s\n", args.input_file_name.c_str());
+
     cell.id              = args.file_cell_id;
     cell.cp              = SRSRAN_CP_NORM;
     cell.phich_length    = SRSRAN_PHICH_NORM;
@@ -287,6 +313,16 @@ bool gAttack_Core::run(){
     }
 #endif
   }
+
+
+  /* 
+  
+  FILE NAME INPUT COMPLETED - MIB DECODING STARTED
+  RF COMPLETE
+  
+  */
+
+
 
   /* set cell for every SubframeWorker*/
   if (!phy->setCell(cell)) {
@@ -363,6 +399,7 @@ bool gAttack_Core::run(){
     /* Set default verbose level */
     set_srsran_verbose_level(args.verbose);
     ret = srsran_ue_sync_zerocopy(&ue_sync, cur_worker->getBuffers(), max_num_samples);
+    // printf("ret %d\n", ret);
     if (ret < 0) {
       if (args.input_file_name != ""){
         std::cout << "Finish reading from file" << std::endl;
@@ -381,9 +418,11 @@ bool gAttack_Core::run(){
       switch (state) {
         case DECODE_MIB:
           if (sf_idx == 0) {
+            // printf("Decode MIB state entered\n");
             uint8_t bch_payload[SRSRAN_BCH_PAYLOAD_LEN];
             int     sfn_offset;
             n = srsran_ue_mib_decode(&ue_mib, bch_payload, NULL, &sfn_offset);
+            // printf("n: %d\n", n);
             if (n < 0) {
               ERROR("Error decoding UE MIB");
               exit(-1);
@@ -393,6 +432,7 @@ bool gAttack_Core::run(){
               printf("Decoded MIB. SFN: %d, offset: %d\n", sfn, sfn_offset);
               sfn   = (sfn + sfn_offset) % 1024;
               state = DECODE_PDSCH;
+              // printf("Entered n<0 loop decoded mib\n");
 
               //config RNTI Manager from Falcon Lib
               RNTIManager& rntiManager = phy->getCommon().getRNTIManager();
@@ -419,6 +459,7 @@ bool gAttack_Core::run(){
           }
           break;
         case DECODE_PDSCH:
+          // printf("DECODE PDSCH state entered\n");
           if ((mcs_tracking.get_nof_api_msg()%30) == 0 && api_mode > -1){
             print_api_header();
             mcs_tracking.increase_nof_api_msg();
@@ -432,7 +473,7 @@ bool gAttack_Core::run(){
           dl_sf.tti = tti;
           dl_sf.sf_type = SRSRAN_SF_NORM;
           cur_worker->prepare(sf_idx, sfn, sf_cnt % (args.dci_format_split_update_interval_ms) == 0, dl_sf);
-
+          // printf("Prepare, sf_idx %d sfn %d sf_cnt %d\n", sf_idx, sfn, sf_cnt);
           /*Get next worker from avail list*/
           std:shared_ptr<SubframeWorker> next_worker;
           if(args.input_file_name == "") {
@@ -460,6 +501,7 @@ bool gAttack_Core::run(){
         sfn = 0;
       }
       total_sf++;
+      printf("total sf - %d", total_sf);
       if ((total_sf%1000)==0 && (api_mode == -1)){
         auto now = std::chrono::system_clock::now();
         std::time_t cur_time = std::chrono::system_clock::to_time_t(now);

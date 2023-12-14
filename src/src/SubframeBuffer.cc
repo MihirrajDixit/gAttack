@@ -18,7 +18,7 @@
  * the LICENSE file in the top-level directory of this distribution
  * and at http://www.gnu.org/licenses/.
  */
-#include "include/SubframeBuffer.h"
+#include "gattack/SubframeBuffer.h"
 
 SubframeBuffer::SubframeBuffer(uint32_t rf_nof_rx_ant) : rf_nof_rx_ant(rf_nof_rx_ant) {
   for (uint32_t i = 0; i < rf_nof_rx_ant; i++) {

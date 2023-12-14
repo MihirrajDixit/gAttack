@@ -1,4 +1,4 @@
-#include "include/WorkerThread.h"
+#include "gattack/WorkerThread.h"
 #include <iostream>
 
 SubframeWorkerThread::SubframeWorkerThread(ThreadSafeQueue<SubframeWorker>& avail,

@@ -1,6 +1,6 @@
 
-#include "include/ArgManager.h"
-#include "include/gAttack_Core.h"
+#include "gattack/ArgManager.h"
+#include "gattack/gAttack_Core.h"
 
 #include "falcon/common/Version.h"
 #include "falcon/common/SignalManager.h"

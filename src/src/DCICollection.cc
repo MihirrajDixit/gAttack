@@ -1,5 +1,5 @@
-#include "include/DCICollection.h"
-#include "include/DCIPrint.h"
+#include "gattack/DCICollection.h"
+#include "gattack/DCIPrint.h"
 #include "falcon/phy/falcon_phch/falcon_dci.h"
 
 DCICollection::DCICollection(const srsran_cell_t& cell,

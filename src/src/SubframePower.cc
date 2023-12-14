@@ -1,8 +1,8 @@
-#include "include/SubframePower.h"
+#include "gattack/SubframePower.h"
 #include "srsran/phy/utils/vector.h"
 
 #include <limits>
-#include "include/Helper.h"
+#include "gattack/Helper.h"
 
 SubframePower::SubframePower(const srsran_cell_t& cell) :
   nof_prb(cell.nof_prb),

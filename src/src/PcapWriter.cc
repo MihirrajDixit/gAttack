@@ -1,4 +1,4 @@
-#include "include/PcapWriter.h"
+#include "gattack/PcapWriter.h"
 
 PcapWriter::PcapWriter(/* args */)
 {

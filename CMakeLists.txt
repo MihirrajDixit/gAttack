@@ -25,6 +25,7 @@ option(FORCE_SUBPROJECT_SRSRAN  "Download and build SRSRAN"       OFF)
 
 option(ENABLE_GUI      "Enable GUI (using srsGUI)"                ON)
 option(ENABLE_UHD      "Enable UHD"                               ON)
+option(ENABLE_ZEROMQ   "Enable ZMQ"                               ON)
 option(ENABLE_BLADERF  "Enable BladeRF"                           ON)
 option(ENABLE_SOAPYSDR "Enable SoapySDR"                          ON)
 #option(ENABLE_HARDSIM  "Enable support for SIM cards"             ON)
@@ -164,6 +165,15 @@ else(BLADERF_FOUND OR UHD_FOUND OR SOAPYSDR_FOUND)
   set(RF_FOUND FALSE CACHE INTERNAL "RF frontend found")
   add_definitions(-DDISABLE_RF)
 endif(BLADERF_FOUND OR UHD_FOUND OR SOAPYSDR_FOUND)
+
+
+if(ENABLE_ZEROMQ)
+  find_package(ZeroMQ)
+  if(ZEROMQ_FOUND)
+    include_directories(${ZEROMQ_INCLUDE_DIRS})
+    link_directories(${ZEROMQ_LIBRARY_DIRS})
+  endif(ZEROMQ_FOUND)
+endif(ENABLE_ZEROMQ)
 
 #####################################################
 find_package(SRSRAN)

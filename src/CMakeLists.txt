@@ -1,4 +1,4 @@
-add_subdirectory(include)
+add_subdirectory(gattack)
 add_subdirectory(src)
 
 set(INSTALL_BUNDLE)

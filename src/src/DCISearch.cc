@@ -19,8 +19,8 @@
  * and at http://www.gnu.org/licenses/.
  */
 
-#include "include/DCISearch.h"
-#include "include/DCICollection.h"
+#include "gattack/DCISearch.h"
+#include "gattack/DCICollection.h"
 
 #define MIN(a, b) (a > b ? b : a)
 #define MAX(a, b) (a > b ? a : b)

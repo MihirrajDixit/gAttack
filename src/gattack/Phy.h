@@ -8,7 +8,7 @@
 #include "MetaFormats.h"
 #include "WorkerThread.h"
 #include "SubframeWorker.h"
-#include "include/ThreadSafeQueue.h"
+#include "gattack/ThreadSafeQueue.h"
 #include "PcapWriter.h"
 #include "MCSTracking.h"
 #include "ULSchedule.h"

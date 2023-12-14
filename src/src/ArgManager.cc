@@ -1,8 +1,8 @@
 //#include "falcon/common/Settings.h"
-#include "include/ArgManager.h"
+#include "gattack/ArgManager.h"
 
 #include "srsran/srsran.h"
-#include "include/Settings.h"
+#include "gattack/Settings.h"
 #include <iostream>
 #include <unistd.h>
 #include <cstdio>
@@ -76,7 +76,9 @@ void ArgManager::usage(Args& args, const std::string& prog) {
 #else
   printf("\t   RF is disabled.\n");
 #endif
-  printf("\t-b Attack Mode [1 - zmq, 2 - RACH TA]\n", args.attack_mode);
+  printf("\t-M Interface 1-ZMQ/2-RF\n", args.interface_mode);
+  printf("\t-b Attack Mode [1 - RACH TA]\n", args.attack_mode);
+  printf("\t-B RF Tx Gain [Default %.1f\n", args.rf_tx_gain);
   printf("\t-i input_file [Default use RF board] (default disable)\n");
   printf("\t-D output filename for DCI [default stdout]\n");
   printf("\t-o offset frequency correction (in Hz) for input file [Default %.1f Hz]\n", args.file_offset_freq);
@@ -108,7 +110,7 @@ void ArgManager::usage(Args& args, const std::string& prog) {
 void ArgManager::parseArgs(Args& args, int argc, char **argv) {
   int opt;
   defaultArgs(args);
-  while ((opt = getopt(argc, argv, "aAbcCDdEfghHilLnpPrRsStTvwWyYqFIuUmOoz")) != -1) {
+  while ((opt = getopt(argc, argv, "aAbcCDdEfghHilLMnpPrRsStTvwWyYqFIuUmOoz")) != -1) {
     switch (opt) {
       case 'a':
         args.rf_args = argv[optind];
@@ -118,6 +120,8 @@ void ArgManager::parseArgs(Args& args, int argc, char **argv) {
         break;
       case 'b':
         args.attack_mode = atoi(argv[optind]);
+      case 'M':
+        args.interface_mode = atoi(argv[optind]);
       case 'g':
         args.rf_gain = strtod(argv[optind], nullptr);
         break;

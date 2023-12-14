@@ -1,7 +1,7 @@
 #pragma once
 
-#include "include/SubframePower.h"
-#include "include/DCICollection.h"
+#include "gattack/SubframePower.h"
+#include "gattack/DCICollection.h"
 #include "ULSchedule.h"
 #include "MCSTracking.h"
 #include "HARQ.h"
