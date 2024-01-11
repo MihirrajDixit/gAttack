@@ -10,6 +10,7 @@ Phy::Phy(uint32_t nof_rx_antennas,
          double metaFormatSplitRatio,
          uint32_t histogramThreshold,
          gAttack_pcap_writer *pcapwriter,
+         Timer *ltetimer,
          MCSTracking *mcs_tracking,
          HARQ *harq,
          int mcs_tracking_mode,
@@ -27,7 +28,7 @@ Phy::Phy(uint32_t nof_rx_antennas,
 
   /* Create subframe workers, like a buffer*/
   for(uint32_t i = 0; i < MAX_WORKER_BUFFER; i++) {
-    std::shared_ptr<SubframeWorker> worker(new SubframeWorker(i, 
+    std::shared_ptr<SubframeWorker> worker(new SubframeWorker(ltetimer, i, 
                                                               common.max_prb, 
                                                               common, 
                                                               metaFormats, 

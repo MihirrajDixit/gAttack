@@ -65,6 +65,9 @@ gAttack_Core::gAttack_Core(const Args& args):
   } else {
     pcap_file_name = "gAttack_ul_mode.pcap";
   }
+  // Timer* ltetimer = new Timer();
+
+  // uint64_t iasdas = abc->nanos();
   pcapwriter.open(pcap_file_name, pcap_file_name_api, 0);
   /*Init HARQ*/
   harq.init_HARQ(args.harq_mode);
@@ -79,6 +82,7 @@ gAttack_Core::gAttack_Core(const Args& args):
                 args.dci_format_split_ratio,
                 args.rnti_histogram_threshold,
                 &pcapwriter,
+                &ltetimer,
                 &mcs_tracking,
                 &harq,
                 args.mcs_tracking_mode,
@@ -501,7 +505,7 @@ bool gAttack_Core::run(){
         sfn = 0;
       }
       total_sf++;
-      printf("total sf - %d", total_sf);
+      // printf("total sf - %d", total_sf);
       if ((total_sf%1000)==0 && (api_mode == -1)){
         auto now = std::chrono::system_clock::now();
         std::time_t cur_time = std::chrono::system_clock::to_time_t(now);

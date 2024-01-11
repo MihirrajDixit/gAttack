@@ -1,15 +1,18 @@
 #include "gattack/DL_Sniffer_PDSCH.h"
+#include "gattack/Timer.h"
 
 float p_a_array[8]{-6, -4.77, -3, -1.77, 0, 1, 2, 3};
 
-PDSCH_Decoder::PDSCH_Decoder(uint32_t idx,
+PDSCH_Decoder::PDSCH_Decoder(Timer *ltetimer,
+							 uint32_t idx,
 							 gAttack_pcap_writer *pcapwriter,
 							 MCSTracking *mcs_tracking,
 							 RNTIManager &rntiManager,
 							 HARQ *harq,
 							 int mcs_tracking_mode,
 							 int harq_mode,
-							 int nof_antenna) : idx(idx),
+							 int nof_antenna) : ltetimer(ltetimer),
+							 					idx(idx),
 												sf_idx(0),
 												sfn(0),
 												buffer(),
@@ -332,6 +335,11 @@ int PDSCH_Decoder::decode_ul_mode(uint32_t rnti, std::vector<DL_Sniffer_rar_resu
 			int ret = run_rar_decode(cur_format, cur_ran_dci_dl, cur_grant, cur_rnti, result);
 			if (ret == SRSRAN_SUCCESS)
 			{
+				// Get time when rar arrived and got decoded
+				if (rar_result->size() > 0){
+				rar_timing = ltetimer->nanos();
+				printf("RAR Timing: %lu\n", rar_timing);
+				}
 				rar_result->push_back(std::move(result));
 			}
 			else
@@ -571,6 +579,23 @@ void PDSCH_Decoder::write_pcap(std::string RNTI_name, uint8_t *pdu, uint32_t pdu
 		pcapwriter->write_dl_crnti(pdu, pdu_len_bytes, crnti, true, tti, retx);
 	}
 }
+// Added datetime code from https://stackoverflow.com/questions/997946/how-to-get-current-time-and-date-in-c
+#include <iostream>
+#include <string>
+#include <stdio.h>
+#include <time.h>
+// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
+const std::string currentDateTime() {
+    time_t     now = time(0);
+    struct tm  tstruct;
+    char       buf[80];
+    tstruct = *localtime(&now);
+    // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
+    // for more information about date/time format
+    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+    return buf;
+}
 
 int PDSCH_Decoder::unpack_rar_response_ul_mode(uint8_t *payload, int length, DL_Sniffer_rar_result &result)
 {
@@ -600,13 +625,16 @@ int PDSCH_Decoder::unpack_rar_response_ul_mode(uint8_t *payload, int length, DL_
 			ul_sf.tti = dl_sf->tti;
 			ul_sniffer_ra_ul_dci_to_grant(&falcon_ue_dl->q->cell, &ul_sf, &hopping_cfg, &dci_ul, &result.ran_ul_grant);
 			rntiManager.activateAndRefresh(result.t_crnti, 0, ActivationReason::RM_ACT_RAR); // add RNTI in RAR response to active list
-			// std::cout << " RAR: " << "TA = " << result.ta;
-			// std::cout << " -- T-CRNTI: " << result.t_crnti;
-			// std::cout << " -- GRANT: ";
-			// for (int g = 0; g < 20; g++){
-			// 	std::cout << unsigned(result.grant[g]) << " ";
-			// }
-			// std::cout << std::endl;
+			std::cout << " RAR: " << "TA = " << result.ta;
+			double distance_ta = ((16 * 0.5 * 3 * std::pow(10,8))*(result.ta) /(15000*2048));
+			std::cout << "currentDateTime()=" << currentDateTime() << std::endl;
+			std::cout << " Distance with TA " << " = " << distance_ta << "\n";
+			std::cout << " -- T-CRNTI: " << result.t_crnti;
+			std::cout << " -- GRANT: ";
+			for (int g = 0; g < 20; g++){
+				std::cout << unsigned(result.grant[g]) << " ";
+			}
+			std::cout << std::endl;
 			ret = SRSRAN_SUCCESS;
 		}
 	}

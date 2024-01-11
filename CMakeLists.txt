@@ -391,6 +391,9 @@ include_directories(${PROJECT_BINARY_DIR}/lib/include)
 include_directories(${PROJECT_SOURCE_DIR}/lib/include)
 include_directories(${PROJECT_SOURCE_DIR}/src)	# for cross includes of top-level applications
 include_directories(${PROJECT_SOURCE_DIR}/lib)
+include_directories(${PROJECT_SOURCE_DIR}/src/src)
+include_directories(${PROJECT_SOURCE_DIR}/src/gattack)
+message(PROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 ########################################################################
 # Add the subdirectories
 ########################################################################
@@ -400,3 +403,5 @@ include_directories(${PROJECT_SOURCE_DIR}/lib)
 
 add_subdirectory(lib)
 add_subdirectory(src)
+
+# add_executable(${PROJECT_SOURCE_DIR}/src/src/Timer.cc ${PROJECT_SOURCE_DIR}/src/gattack/Timer.h)

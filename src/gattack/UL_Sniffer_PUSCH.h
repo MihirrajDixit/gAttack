@@ -16,6 +16,7 @@
 #include "srsran/asn1/s1ap.h"
 #include "srsran/mac/pdu.h"
 #include <sstream>
+#include "Timer.h"
 
 using namespace asn1;
 using namespace asn1::s1ap;
@@ -44,7 +45,8 @@ const static int prach_buffer_sz = 128 * 1024;
 class PUSCH_Decoder
 {
 public:
-    PUSCH_Decoder(srsran_enb_ul_t &enb_ul,
+    PUSCH_Decoder(Timer *ltetimer,
+                  srsran_enb_ul_t &enb_ul,
                   srsran_ul_sf_cfg_t &ul_sf,
                   ULSchedule *ulsche,
                   cf_t** original_buffer,
@@ -75,6 +77,8 @@ public:
     void set_configed() { configed = true;}
     bool get_configed() { return configed;}
 
+    uint32_t n_ta;
+    
     std::string modulation_mode_string(int mode, bool max_64qam);
     std::string modulation_mode_string_256(int idx);
     void print_debug(DCI_UL &decoding_mem, 
@@ -101,6 +105,7 @@ public:
     }
     void set_debug_mode(bool en_debug_)  { en_debug = en_debug_;}
     void set_api_mode(int api_mode_)     { api_mode = api_mode_;}
+    uint64_t prach_preamble_detected_time = 0;
 private:
     uint16_t target_rnti    = -1;
     bool has_target_rnti    = false;
@@ -119,6 +124,7 @@ private:
     srsran_enb_ul_t         &enb_ul;
     srsran_ul_sf_cfg_t      &ul_sf;
     gAttack_pcap_writer  *pcapwriter;
+    Timer                  *ltetimer;
     srsran_pusch_res_t      pusch_res           = {};
     srsran_ul_cfg_t         &ul_cfg;
 

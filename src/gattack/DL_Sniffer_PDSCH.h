@@ -5,6 +5,7 @@
 #include <vector>
 #include <sstream>
 #include "PcapWriter.h"
+#include "Timer.h"
 #include "HARQ.h"
 #include "srsran/mac/pdu.h"
 #include "srsue/hdr/stack/mac/proc_ra.h"
@@ -44,7 +45,6 @@
 /*Include for decode MAC CE*/
 #include "srsran/mac/pdu.h"
 
-
 using namespace asn1;
 using namespace asn1::rrc;
 
@@ -63,7 +63,8 @@ struct DL_Sniffer_rar_result
 class PDSCH_Decoder
 {
 public:
-    PDSCH_Decoder(uint32_t idx, 
+    PDSCH_Decoder(Timer *ltetimer,
+                  uint32_t idx, 
                   gAttack_pcap_writer *pcapwriter, 
                   MCSTracking *mcs_tracking,
                   RNTIManager& rntiManager,
@@ -155,8 +156,10 @@ public:
     void set_debug_mode(bool debug) { en_debug = debug;}
     void set_api_mode(int api_mode_) { api_mode = api_mode_;}
     void print_api_dl(uint32_t tti, uint16_t rnti, int ident, std::string value, int msg);
+    uint64_t rar_timing = 0;
 
 private:
+    
     int         api_mode            = -1; 
     bool        en_debug            = false;
     uint16_t    target_rnti         = 0;
@@ -180,6 +183,7 @@ private:
     srsran_pdsch_res_t              *pdsch_res;
     srsran_pdsch_cfg_t              *pdsch_cfg; //buffer
     gAttack_pcap_writer          *pcapwriter;
+    Timer                         *ltetimer;
     RNTIManager                     &rntiManager;
     int                             mcs_tracking_mode;
     MCSTracking                     *mcs_tracking;

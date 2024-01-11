@@ -12,10 +12,12 @@
 #include "UL_Sniffer_PUSCH.h"
 #include "srsran/phy/io/filesink.h"
 #include "Sniffer_dependency.h"
+#include "Timer.h"
 
 class SubframeWorker {
 public:
-  SubframeWorker(uint32_t idx,
+  SubframeWorker(Timer *ltetimer,
+                 uint32_t idx,
                  uint32_t max_prb,
                  PhyCommon& common,
                  DCIMetaFormats& metaFormats,
@@ -47,6 +49,7 @@ public:
   void                  set_ul_harq(UL_HARQ *ul_harq_){ ul_harq = ul_harq_;}
   void                  print_nof_DCI(SubframeInfo &subframeInfo, uint32_t tti);
   DCIBlindSearchStats&  getStats();
+  uint64_t nanos();
 
 private:
   uint32_t              idx;
@@ -66,6 +69,7 @@ private:
   DCIBlindSearchStats   stats;
   gAttack_pcap_writer *pcapwriter;
   PDSCH_Decoder         *pdschdecoder;
+  Timer                 *ltetimer;
   int                   mcs_tracking_mode;
   MCSTracking           *mcs_tracking;
   int                   harq_mode;

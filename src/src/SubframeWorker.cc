@@ -2,13 +2,13 @@
 #include "gattack/DCISearch.h"
 #include "gattack/SubframeInfo.h"
 #include "falcon/prof/Lifetime.h"
-
 #include <iostream>
 
 /* Buffers for PCH reception (not included in DL HARQ) */
 const static uint32_t pch_payload_buffer_sz = 8 * 1024; // cf. srsran: srsue/hdr/mac/mac.h
 
-SubframeWorker::SubframeWorker(uint32_t idx,
+SubframeWorker::SubframeWorker(Timer *ltetimer,
+                               uint32_t idx,
                                uint32_t max_prb,
                                PhyCommon &common,
                                DCIMetaFormats &metaFormats,
@@ -18,7 +18,8 @@ SubframeWorker::SubframeWorker(uint32_t idx,
                                int mcs_tracking_mode,
                                int harq_mode,
                                ULSchedule *ulsche,
-                               int sniffer_mode) : sfb(common.nof_rx_antennas),
+                               int sniffer_mode) : ltetimer(ltetimer),
+                                                   sfb(common.nof_rx_antennas),
                                                    idx(idx),
                                                    max_prb(max_prb),
                                                    common(common),
@@ -44,6 +45,10 @@ SubframeWorker::SubframeWorker(uint32_t idx,
   set_pdsch_uecfg(&ue_dl_cfg.cfg.pdsch);
   /*Create new ue_dl*/
   falcon_ue_dl.q = new srsran_ue_dl_t;
+  uint64_t asda = nanos();
+
+  // ltetimer->ul_rach_time = 0;
+  // ltetimer->dl_rar_time = 0;
 
   switch (sniffer_mode)
   {
@@ -51,13 +56,14 @@ SubframeWorker::SubframeWorker(uint32_t idx,
     /* Config for Downlink Sniffing function*/
     srsran_ue_dl_init(falcon_ue_dl.q, sfb.sf_buffer, max_prb, common.nof_rx_antennas);
     /* PDSCH decoder (Downlink)*/
-    pdschdecoder = new PDSCH_Decoder(idx, pcapwriter, mcs_tracking, common.getRNTIManager(), harq, mcs_tracking_mode, harq_mode, common.nof_rx_antennas);
+    pdschdecoder = new PDSCH_Decoder(ltetimer, idx, pcapwriter, mcs_tracking, common.getRNTIManager(), harq, mcs_tracking_mode, harq_mode, common.nof_rx_antennas);
     break;
   case UL_MODE:
     /* Config for Downlink Sniffing function*/
     srsran_ue_dl_init(falcon_ue_dl.q, sfb.sf_buffer, max_prb, 1); // only 1 antenna for DL in the UL Sniffer Mode
     /* PDSCH decoder (Downlink)*/
-    pdschdecoder = new PDSCH_Decoder(idx,
+    pdschdecoder = new PDSCH_Decoder(ltetimer,
+                                     idx,
                                      pcapwriter,
                                      mcs_tracking,
                                      common.getRNTIManager(),
@@ -66,7 +72,8 @@ SubframeWorker::SubframeWorker(uint32_t idx,
                                      harq_mode,
                                      common.nof_rx_antennas);
     /* PUSCH decoder (Uplink)*/
-    puschdecoder = new PUSCH_Decoder(enb_ul,
+    puschdecoder = new PUSCH_Decoder(ltetimer,
+                                     enb_ul,
                                      ul_sf,
                                      ulsche,
                                      sfb.sf_buffer,
@@ -88,6 +95,17 @@ SubframeWorker::SubframeWorker(uint32_t idx,
   /*Init filesink for saving IQ samples in test mode*/
   srsran_filesink_init(&filesink, "ul_sample.raw", SRSRAN_COMPLEX_FLOAT_BIN);
 }
+
+
+uint64_t SubframeWorker::nanos()
+{
+    uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(
+            std::chrono::high_resolution_clock::now().time_since_epoch())
+            .count();
+    return ns; 
+}
+
+
 
 SubframeWorker::~SubframeWorker()
 {
@@ -236,7 +254,7 @@ void SubframeWorker::run_dl_mode(SubframeInfo &subframeInfo)
 
 void SubframeWorker::run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti)
 {
-  printf("Entered RUN UL Mode\n");
+  // printf("Entered RUN UL Mode\n");
   if (!ulsche->get_config())
   {
     int sib_ret = SRSRAN_SUCCESS;
@@ -277,7 +295,7 @@ void SubframeWorker::run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti)
 
       /*RAR decode hopping config to convert dci 0 to ul grant*/
       pdschdecoder->set_hopping(ul_cfg.hopping);
-      printf("Entered SET RACH CONFIG\n");
+      // printf("Entered SET RACH CONFIG\n");
       /*RACH detector config*/
       puschdecoder->set_rach_config(ulsche->get_prach_config());
       puschdecoder->set_configed();
@@ -349,6 +367,12 @@ void SubframeWorker::run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti)
                                        &subframeInfo.getSubframePower());
       puschdecoder->decode();         // decode PUSCH
       puschdecoder->work_prach();     // decode PRACH
+      if (pdschdecoder->rar_timing > 0 && puschdecoder->prach_preamble_detected_time > 0){
+        if (pdschdecoder->rar_timing > puschdecoder->prach_preamble_detected_time){
+          uint64_t diff_rar_prach = pdschdecoder->rar_timing - puschdecoder->prach_preamble_detected_time;
+          printf("Timing Difference between PRACH and RAR is %lu", diff_rar_prach);
+        }
+      }
       ulsche->deleteULSche(tti);      // delete current DCI0 list and uplink grant in the database after decoding
       ulsche->delete_rar_ULSche(tti); // also for RAR grant
     }

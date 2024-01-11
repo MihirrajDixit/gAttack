@@ -9,7 +9,8 @@ bool valid_prb_ul[101] = {true, true, true, true, true, true, true, false, true,
                           false, false, true, true, false, false, false, false, false, false, false, false, true,
                           false, false, false, false, false, true, false, false, false, true};
 
-PUSCH_Decoder::PUSCH_Decoder(srsran_enb_ul_t &enb_ul,
+PUSCH_Decoder::PUSCH_Decoder(Timer *ltetimer,
+                             srsran_enb_ul_t &enb_ul,
                              srsran_ul_sf_cfg_t &ul_sf,
                              ULSchedule *ulsche,
                              cf_t **original_buffer,
@@ -17,7 +18,8 @@ PUSCH_Decoder::PUSCH_Decoder(srsran_enb_ul_t &enb_ul,
                              srsran_ul_cfg_t &ul_cfg,
                              gAttack_pcap_writer *pcapwriter,
                              MCSTracking *mcstracking,
-                             bool en_debug) : enb_ul(enb_ul),
+                             bool en_debug) : ltetimer(ltetimer),
+                                              enb_ul(enb_ul),
                                               ul_sf(ul_sf),
                                               dci_ul(),
                                               ulsche(ulsche),
@@ -689,6 +691,7 @@ void PUSCH_Decoder::work_prach()
 
         if (prach_nof_det)
         {
+            prach_preamble_detected_time = ltetimer->nanos();
             int max_idx = 0;
             float peak = 0;
             for (uint32_t i = 0; i < prach_nof_det; i++)
@@ -699,6 +702,20 @@ void PUSCH_Decoder::work_prach()
                     max_idx = i;
                 }
             }
+            printf("PRACH Preamble Detected Time: %lu\n", prach_preamble_detected_time);
+            printf("PRACH: %d/%d, preamble=%d, offset=%.1f us, peak2avg=%.1f \n",
+                       max_idx + 1,
+                       prach_nof_det,
+                       prach_indices[max_idx],
+                       prach_offsets[max_idx] * 1e6,
+                       prach_p2avg[max_idx]);
+
+            if (prach_offsets[max_idx] * 1e6 < prach_p2avg[max_idx]) {
+                // Convert time offset to Time Alignment command
+                n_ta = (uint32_t)(prach_offsets[max_idx] / (16 * SRSRAN_LTE_TS));
+            }
+            printf("Time Advance Value detected by Sniffer - %d\n at time epoch %lu", n_ta, prach_preamble_detected_time);
+            
             if (en_debug)
             {
                 printf("PRACH: %d/%d, preamble=%d, offset=%.1f us, peak2avg=%.1f \n",

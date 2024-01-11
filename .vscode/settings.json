@@ -73,6 +73,12 @@
         "numbers": "cpp",
         "semaphore": "cpp",
         "stop_token": "cpp",
-        "variant": "cpp"
-    }
+        "variant": "cpp",
+        "any": "cpp",
+        "executor": "cpp",
+        "io_context": "cpp",
+        "netfwd": "cpp",
+        "timer": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

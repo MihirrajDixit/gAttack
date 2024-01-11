@@ -33,6 +33,7 @@
 #include "srsran/common/mac_pcap.h"
 #include "Phy.h"
 #include "PcapWriter.h"
+#include "Timer.h"
 #include "HARQ.h"
 #include <ctime>
 #include <iostream>
@@ -98,6 +99,8 @@ public:
   void print_api_header();
   bool run();
   void stop();
+  
+  // Timer* ltetimer = new Timer();
 private:
 
   void handleSignal() override;
@@ -111,6 +114,7 @@ private:
   std::mutex              harq_map_mutex;
   Phy                     *phy;
   gAttack_pcap_writer  pcapwriter;
+  Timer                 ltetimer;
   srsran::mac_pcap        mac_pcap;
   int                     mcs_tracking_mode;
   MCSTracking             mcs_tracking;
