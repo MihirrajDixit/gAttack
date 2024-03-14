@@ -689,9 +689,9 @@ void PUSCH_Decoder::work_prach()
                                    prach_p2avg,
                                    &prach_nof_det);
 
+
         if (prach_nof_det)
         {
-            prach_preamble_detected_time = ltetimer->nanos();
             int max_idx = 0;
             float peak = 0;
             for (uint32_t i = 0; i < prach_nof_det; i++)
@@ -702,19 +702,20 @@ void PUSCH_Decoder::work_prach()
                     max_idx = i;
                 }
             }
-            printf("PRACH Preamble Detected Time: %lu\n", prach_preamble_detected_time);
-            printf("PRACH: %d/%d, preamble=%d, offset=%.1f us, peak2avg=%.1f \n",
+            prach_preamble_detected_time = ltetimer->nanos();
+            // printf("PRACH Preamble Detected Time: %lu\n", prach_preamble_detected_time);
+            printf("PRACH: %d/%d, preamble=%d, offset=%.1f us, peak2avg=%.1f, preamble_detected_time: %lu \n",
                        max_idx + 1,
                        prach_nof_det,
                        prach_indices[max_idx],
                        prach_offsets[max_idx] * 1e6,
-                       prach_p2avg[max_idx]);
+                       prach_p2avg[max_idx], prach_preamble_detected_time);
 
             if (prach_offsets[max_idx] * 1e6 < prach_p2avg[max_idx]) {
                 // Convert time offset to Time Alignment command
                 n_ta = (uint32_t)(prach_offsets[max_idx] / (16 * SRSRAN_LTE_TS));
             }
-            printf("Time Advance Value detected by Sniffer - %d\n at time epoch %lu", n_ta, prach_preamble_detected_time);
+            printf("Time Advance Value detected by Sniffer - %d at time epoch %lu\n", n_ta, prach_preamble_detected_time);
             
             if (en_debug)
             {

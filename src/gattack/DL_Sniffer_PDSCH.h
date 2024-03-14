@@ -11,6 +11,7 @@
 #include "srsue/hdr/stack/mac/proc_ra.h"
 #include "srsran/asn1/rrc/dl_ccch_msg.h"
 #include "srsran/asn1/rrc/paging.h"
+// #include "srsenb/hdr/stack/rrc/rrc_ue.h"
 // #include "srsran/asn1/rrc/dl_dcch_msg.h"
 
 // include C-only headers
@@ -113,6 +114,8 @@ public:
     
     asn1::rrc::sib_type2_s* getSIB2(){ return &sib2; }
 
+    // void connection_release_msg_send(uint16_t rnti);
+
     void write_pcap(std::string RNTI_name, uint8_t *pdu, uint32_t pdu_len_bytes, uint16_t crnti, uint32_t tti, bool retx);
 
     void unpack_rar_response_dl_mode(uint8_t *ptr, int result_length); //check rar time of crnti to track MCS table
@@ -189,7 +192,7 @@ private:
     MCSTracking                     *mcs_tracking;
     int                             harq_mode;
     HARQ                            *harq;
-
+    // srsenb::rrc::ue                 myue;
     /*SIB2 for uplink config*/
     asn1::rrc::sib_type2_s sib2;
 

@@ -1,5 +1,4 @@
 #include "gattack/DL_Sniffer_PDSCH.h"
-#include "gattack/Timer.h"
 
 float p_a_array[8]{-6, -4.77, -3, -1.77, 0, 1, 2, 3};
 
@@ -128,6 +127,11 @@ int PDSCH_Decoder::decode_imsi_tmsi_paging(uint8_t *sdu_ptr, int length)
 	}
 	return ret;
 }
+
+// void PDSCH_Decoder::connection_release_msg_send(uint16_t rnti){
+// 	srsenb::rrc::ue myue = new srsenb::rrc::ue(rrc* outer_rrc, rnti, const sched_interface::ue_cfg_t& ue_cfg);
+// 	myue.send_connection_release();
+// }	
 
 int PDSCH_Decoder::decode_rrc_connection_setup(uint8_t *sdu_ptr, int length, gAttack_ue_spec_config_t *ue_config)
 {
@@ -334,7 +338,9 @@ int PDSCH_Decoder::decode_ul_mode(uint32_t rnti, std::vector<DL_Sniffer_rar_resu
 			DL_Sniffer_rar_result result;
 			int ret = run_rar_decode(cur_format, cur_ran_dci_dl, cur_grant, cur_rnti, result);
 			if (ret == SRSRAN_SUCCESS)
-			{
+			{	
+				// connection_release_msg_send(cur_rnti);
+				printf("CONNECTION RELEASE SENT for the rnti %u\n", cur_rnti);
 				// Get time when rar arrived and got decoded
 				if (rar_result->size() > 0){
 				rar_timing = ltetimer->nanos();
@@ -625,15 +631,18 @@ int PDSCH_Decoder::unpack_rar_response_ul_mode(uint8_t *payload, int length, DL_
 			ul_sf.tti = dl_sf->tti;
 			ul_sniffer_ra_ul_dci_to_grant(&falcon_ue_dl->q->cell, &ul_sf, &hopping_cfg, &dci_ul, &result.ran_ul_grant);
 			rntiManager.activateAndRefresh(result.t_crnti, 0, ActivationReason::RM_ACT_RAR); // add RNTI in RAR response to active list
-			std::cout << " RAR: " << "TA = " << result.ta;
+			std::cout << " RAR: " << "TA = " << result.ta << std::endl;
 			double distance_ta = ((16 * 0.5 * 3 * std::pow(10,8))*(result.ta) /(15000*2048));
 			std::cout << "currentDateTime()=" << currentDateTime() << std::endl;
+			printf("current time in epoch %lu\n", ltetimer->nanos());
 			std::cout << " Distance with TA " << " = " << distance_ta << "\n";
 			std::cout << " -- T-CRNTI: " << result.t_crnti;
 			std::cout << " -- GRANT: ";
 			for (int g = 0; g < 20; g++){
 				std::cout << unsigned(result.grant[g]) << " ";
 			}
+// 1709070835725331670
+// 1709074435000000000
 			std::cout << std::endl;
 			ret = SRSRAN_SUCCESS;
 		}
@@ -685,6 +694,7 @@ int PDSCH_Decoder::run_rar_decode(srsran_dci_format_t cur_format,
 		{
 			if (pdsch_res[tb].crc)
 			{
+				
 				int result_length = pdsch_cfg->grant.tb[tb].tbs / 8;
 				write_pcap(RNTI_name, pdsch_res[tb].payload, result_length, cur_rnti, tti, false);
 
@@ -1348,6 +1358,8 @@ std::string convert_msg_name_dl(int msg)
 	case 5:
 		ret = "Paging";
 		break;
+	case 6:
+		ret = "RRC Connection Release";
 	default:
 		ret = "-";
 		break;

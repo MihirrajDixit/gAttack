@@ -565,9 +565,9 @@ bool gAttack_Core::run(){
         nof_lost_sync = 0;
       }
       nof_lost_sync++;
-      cout << "Finding PSS... Peak: " << srsran_sync_get_peak_value(&ue_sync.sfind) <<
-              ", FrameCnt: " << ue_sync.frame_total_cnt <<
-              " State: " << ue_sync.state << endl;
+      // cout << "Finding PSS... Peak: " << srsran_sync_get_peak_value(&ue_sync.sfind) <<
+      //         ", FrameCnt: " << ue_sync.frame_total_cnt <<
+      //         " State: " << ue_sync.state << endl;
     }
     sf_cnt++;
 
