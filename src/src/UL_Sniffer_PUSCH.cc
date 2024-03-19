@@ -56,6 +56,17 @@ int PUSCH_Decoder::decode_rrc_connection_request(DCI_UL &decoding_mem, uint8_t *
     {
         if (ul_ccch_msg.msg.c1().type().value == ul_ccch_msg_type_c::c1_c_::types::rrc_conn_request)
         {
+            uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+            printf("RRC Connection Request - Sniffer Received - %lu\n", ns);
+            std::ofstream myfile;
+            myfile.open ("timing.csv", std::ios_base::app);
+            if (myfile.is_open()) { // Check if the file is successfully opened
+                myfile << "RRC Connection Request,Sniffer Received," << ns << std::endl; // Write data to the file
+                myfile.close(); // Close the file
+                std::cout << "Data written to timing.csv successfully." << std::endl; // Optional: Print a success message
+            } else {
+                std::cerr << "Error opening file." << std::endl; // Print an error message if the file couldn't be opened
+            }
             asn1::rrc::rrc_conn_request_s con_request = ul_ccch_msg.msg.c1().rrc_conn_request();
             rrc_conn_request_r8_ies_s *msg_r8 = &con_request.crit_exts.rrc_conn_request_r8();
             if (msg_r8->ue_id.type() == init_ue_id_c::types::s_tmsi)
@@ -112,6 +123,17 @@ int PUSCH_Decoder::decode_ul_dcch(DCI_UL &decoding_mem, uint8_t *sdu_ptr, int le
         }
         else if (ul_dcch_msg.msg.c1().type() == ul_dcch_msg_type_c::c1_c_::types::rrc_conn_setup_complete && (api_mode == 2 || api_mode == 3))
         { // IMSI catching, IMSI attach
+            uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+            printf("RRC Connection Setup Complete - Sniffer Received - %lu\n", ns);
+            std::ofstream myfile;
+            myfile.open ("timing.csv", std::ios_base::app);
+            if (myfile.is_open()) { // Check if the file is successfully opened
+                myfile << "RRC Connection Setup Complete,Sniffer Received," << ns << std::endl; // Write data to the file
+                myfile.close(); // Close the file
+                std::cout << "Data written to timing.csv successfully." << std::endl; // Optional: Print a success message
+            } else {
+                std::cerr << "Error opening file." << std::endl; // Print an error message if the file couldn't be opened
+            }
             // printf("[API] SF: %d-%d, RNTI: %d, Found RRC Connection Setup Complete \n", ul_sf.tti/10, ul_sf.tti%10, decoding_mem.rnti);
             asn1::rrc::rrc_conn_setup_complete_s msg = ul_dcch_msg.msg.c1().rrc_conn_setup_complete();
             rrc_conn_setup_complete_r8_ies_s *msg_r8 = &msg.crit_exts.c1().rrc_conn_setup_complete_r8();
@@ -701,15 +723,28 @@ void PUSCH_Decoder::work_prach()
                     peak = prach_p2avg[i];
                     max_idx = i;
                 }
+                prach_preamble_detected_time = ltetimer->nanos();
+                uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+                // printf("PRACH Preamble Detected Time: %lu\n", prach_preamble_detected_time);
+                printf("PRACH: %d/%d, preamble=%d, offset=%.1f us, peak2avg=%.1f, preamble_detected_time: %lu \n",
+                    i + 1,
+                    prach_nof_det,
+                    prach_indices[i],
+                    prach_offsets[i] * 1e6,
+                    prach_p2avg[i], prach_preamble_detected_time);
+                
+                printf("Preamble %d - Sniffer Received - %lu\n", prach_indices[i], ns);
+                std::ofstream myfile;
+                myfile.open ("timing.csv", std::ios_base::app);
+                if (myfile.is_open()) { // Check if the file is successfully opened
+                    myfile << "PRACH Preamble " << prach_indices[i] << ",Sniffer Received," << ns << std::endl;
+                    myfile.close(); // Close the file
+                    std::cout << "Data written to timing.csv successfully." << std::endl; // Optional: Print a success message
+                } else {
+                std::cerr << "Error opening file." << std::endl; // Print an error message if the file couldn't be opened
+                }
             }
-            prach_preamble_detected_time = ltetimer->nanos();
-            // printf("PRACH Preamble Detected Time: %lu\n", prach_preamble_detected_time);
-            printf("PRACH: %d/%d, preamble=%d, offset=%.1f us, peak2avg=%.1f, preamble_detected_time: %lu \n",
-                       max_idx + 1,
-                       prach_nof_det,
-                       prach_indices[max_idx],
-                       prach_offsets[max_idx] * 1e6,
-                       prach_p2avg[max_idx], prach_preamble_detected_time);
+
 
             if (prach_offsets[max_idx] * 1e6 < prach_p2avg[max_idx]) {
                 // Convert time offset to Time Alignment command

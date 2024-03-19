@@ -1,0 +1,1456 @@
+[
+  {
+    "_index": "packets-2024-03-14",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.encap_type": "45",
+          "frame.time": "Mar 14, 2024 21:34:49.234738000 CET",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1710448489.234738000",
+          "frame.time_delta": "0.000000000",
+          "frame.time_delta_displayed": "0.000000000",
+          "frame.time_relative": "0.000000000",
+          "frame.number": "1",
+          "frame.len": "60",
+          "frame.cap_len": "60",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "user_dlt:mac-lte-framed:mac-lte:lte_rrc"
+        },
+        "user_dlt": "DLT: 147, Payload: mac-lte-framed (mac-lte-framed)",
+        "mac-lte": {
+          "mac-lte.context": "",
+          "mac-lte.context_tree": {
+            "mac-lte.radio-type": "1",
+            "mac-lte.direction": "1",
+            "mac-lte.sfn": "704",
+            "mac-lte.subframe": "9",
+            "mac-lte.rnti": "65535",
+            "mac-lte.rnti-type": "4",
+            "mac-lte.is-predefined-frame": "0",
+            "mac-lte.length": "41",
+            "mac-lte.crc-status": "1",
+            "mac-lte.carrier-id": "0"
+          },
+          "mac-lte.bch-transport-channel": "4",
+          "mac-lte.bch.pdu": "00:80:0c:e1:bf:78:88:00:ca:11:e0:01:00:00:08:01:82:99:45:ab:9c:30:c6:a6:cc:c0:02:14:62:d8:4e:a5:a4:00:00:00:00:00:00:00:00",
+          "lte_rrc": {
+            "lte_rrc": "LTE Radio Resource Control (RRC) protocol",
+            "lte-rrc.BCCH_DL_SCH_Message_element": {
+              "per.choice_index": "0",
+              "lte-rrc.bCCH_DL_SCH_Message.message": "0",
+              "lte-rrc.bCCH_DL_SCH_Message.message_tree": {
+                "per.choice_index": "0",
+                "lte-rrc.c1": "0",
+                "lte-rrc.c1_tree": {
+                  "lte-rrc.systemInformation_element": {
+                    "per.choice_index": "0",
+                    "lte-rrc.criticalExtensions": "0",
+                    "lte-rrc.criticalExtensions_tree": {
+                      "lte-rrc.systemInformation_r8_element": {
+                        "per.optional_field_bit": "0",
+                        "per.sequence_of_length": "2",
+                        "lte-rrc.sib_TypeAndInfo": "2",
+                        "lte-rrc.sib_TypeAndInfo_tree": {
+                          "Item 0": {
+                            "per.extension_bit": "0",
+                            "per.choice_index": "0",
+                            "lte-rrc.sib_TypeAndInfo_item": "0",
+                            "lte-rrc.sib_TypeAndInfo_item_tree": {
+                              "lte-rrc.sib2_element": {
+                                "per.extension_bit": "0",
+                                "per.optional_field_bit": "0",
+                                "per.optional_field_bit": "0",
+                                "lte-rrc.radioResourceConfigCommon_element": {
+                                  "per.extension_bit": "0",
+                                  "lte-rrc.rach_ConfigCommon_element": {
+                                    "per.extension_bit": "0",
+                                    "lte-rrc.preambleInfo_element": {
+                                      "per.optional_field_bit": "0",
+                                      "per.enum_index": "12",
+                                      "lte-rrc.numberOfRA_Preambles": "12"
+                                    },
+                                    "lte-rrc.powerRampingParameters_element": {
+                                      "per.enum_index": "3",
+                                      "lte-rrc.powerRampingStep": "3",
+                                      "per.enum_index": "8",
+                                      "lte-rrc.preambleInitialReceivedTargetPower": "8"
+                                    },
+                                    "lte-rrc.ra_SupervisionInfo_element": {
+                                      "per.enum_index": "6",
+                                      "lte-rrc.preambleTransMax": "6",
+                                      "per.enum_index": "7",
+                                      "lte-rrc.ra_ResponseWindowSize": "7",
+                                      "per.enum_index": "7",
+                                      "lte-rrc.mac_ContentionResolutionTimer": "7"
+                                    },
+                                    "lte-rrc.maxHARQ_Msg3Tx": "4"
+                                  },
+                                  "lte-rrc.bcch_Config_element": {
+                                    "per.enum_index": "3",
+                                    "lte-rrc.modificationPeriodCoeff": "3"
+                                  },
+                                  "lte-rrc.pcch_Config_element": {
+                                    "per.enum_index": "0",
+                                    "lte-rrc.defaultPagingCycle": "0",
+                                    "per.enum_index": "2",
+                                    "lte-rrc.nB": "2"
+                                  },
+                                  "lte-rrc.prach_Config_element": {
+                                    "lte-rrc.rootSequenceIndex": "128",
+                                    "lte-rrc.prach_ConfigInfo_element": {
+                                      "lte-rrc.prach_ConfigIndex": "3",
+                                      "lte-rrc.highSpeedFlag": "0",
+                                      "lte-rrc.zeroCorrelationZoneConfig": "5",
+                                      "lte-rrc.prach_FreqOffset": "4"
+                                    }
+                                  },
+                                  "lte-rrc.pdsch_ConfigCommon_element": {
+                                    "lte-rrc.referenceSignalPower": "0",
+                                    "lte-rrc.p_b": "0"
+                                  },
+                                  "lte-rrc.pusch_ConfigCommon_element": {
+                                    "lte-rrc.pusch_ConfigBasic_element": {
+                                      "lte-rrc.n_SB": "1",
+                                      "per.enum_index": "0",
+                                      "lte-rrc.hoppingMode": "0",
+                                      "lte-rrc.pusch_HoppingOffset": "2",
+                                      "lte-rrc.enable64QAM": "0"
+                                    },
+                                    "lte-rrc.ul_ReferenceSignalsPUSCH_element": {
+                                      "lte-rrc.groupHoppingEnabled": "0",
+                                      "lte-rrc.groupAssignmentPUSCH": "0",
+                                      "lte-rrc.sequenceHoppingEnabled": "0",
+                                      "lte-rrc.cyclicShift": "0"
+                                    }
+                                  },
+                                  "lte-rrc.pucch_ConfigCommon_element": {
+                                    "per.enum_index": "0",
+                                    "lte-rrc.deltaPUCCH_Shift": "0",
+                                    "lte-rrc.nRB_CQI": "1",
+                                    "lte-rrc.nCS_AN": "0",
+                                    "lte-rrc.n1PUCCH_AN": "12"
+                                  },
+                                  "per.choice_index": "0",
+                                  "lte-rrc.soundingRS_UL_ConfigCommon": "0",
+                                  "lte-rrc.soundingRS_UL_ConfigCommon_tree": {
+                                    "lte-rrc.release_element": ""
+                                  },
+                                  "lte-rrc.uplinkPowerControlCommon_element": {
+                                    "lte-rrc.p0_NominalPUSCH": "-85",
+                                    "per.enum_index": "4",
+                                    "lte-rrc.alpha": "4",
+                                    "lte-rrc.p0_NominalPUCCH": "-107",
+                                    "lte-rrc.deltaFList_PUCCH_element": {
+                                      "per.enum_index": "1",
+                                      "lte-rrc.deltaF_PUCCH_Format1": "1",
+                                      "per.enum_index": "1",
+                                      "lte-rrc.deltaF_PUCCH_Format1b": "1",
+                                      "per.enum_index": "2",
+                                      "lte-rrc.deltaF_PUCCH_Format2": "2",
+                                      "per.enum_index": "2",
+                                      "lte-rrc.deltaF_PUCCH_Format2a": "2",
+                                      "per.enum_index": "2",
+                                      "lte-rrc.deltaF_PUCCH_Format2b": "2"
+                                    },
+                                    "lte-rrc.deltaPreambleMsg3": "6"
+                                  },
+                                  "per.enum_index": "0",
+                                  "lte-rrc.ul_CyclicPrefixLength": "0"
+                                },
+                                "lte-rrc.ue_TimersAndConstants_element": {
+                                  "per.extension_bit": "0",
+                                  "per.enum_index": "7",
+                                  "lte-rrc.t300": "7",
+                                  "per.enum_index": "0",
+                                  "lte-rrc.t301": "0",
+                                  "per.enum_index": "3",
+                                  "lte-rrc.t310": "3",
+                                  "per.enum_index": "0",
+                                  "lte-rrc.n310": "0",
+                                  "per.enum_index": "3",
+                                  "lte-rrc.t311": "3",
+                                  "per.enum_index": "0",
+                                  "lte-rrc.n311": "0"
+                                },
+                                "lte-rrc.freqInfo_element": {
+                                  "per.optional_field_bit": "1",
+                                  "per.optional_field_bit": "1",
+                                  "lte-rrc.ul_CarrierFreq": "21350",
+                                  "per.enum_index": "3",
+                                  "lte-rrc.ul_Bandwidth": "3",
+                                  "lte-rrc.additionalSpectrumEmission": "1"
+                                },
+                                "per.enum_index": "0",
+                                "lte-rrc.timeAlignmentTimerCommon": "0"
+                              }
+                            }
+                          },
+                          "Item 1": {
+                            "per.extension_bit": "0",
+                            "per.choice_index": "1",
+                            "lte-rrc.sib_TypeAndInfo_item": "1",
+                            "lte-rrc.sib_TypeAndInfo_item_tree": {
+                              "lte-rrc.sib3_element": {
+                                "per.extension_bit": "0",
+                                "lte-rrc.cellReselectionInfoCommon_element": {
+                                  "per.optional_field_bit": "0",
+                                  "per.enum_index": "2",
+                                  "lte-rrc.q_Hyst": "2"
+                                },
+                                "lte-rrc.cellReselectionServingFreqInfo_element": {
+                                  "per.optional_field_bit": "1",
+                                  "lte-rrc.s_NonIntraSearch": "3",
+                                  "lte-rrc.threshServingLow": "2",
+                                  "lte-rrc.cellReselectionPriority": "6"
+                                },
+                                "lte-rrc.intraFreqCellReselectionInfo_element": {
+                                  "per.optional_field_bit": "1",
+                                  "per.optional_field_bit": "1",
+                                  "per.optional_field_bit": "0",
+                                  "per.optional_field_bit": "0",
+                                  "lte-rrc.q_RxLevMin": "-61",
+                                  "lte-rrc.p_Max": "23",
+                                  "lte-rrc.s_IntraSearch": "5",
+                                  "lte-rrc.presenceAntennaPort1": "1",
+                                  "lte-rrc.neighCellConfig": "1",
+                                  "lte-rrc.t_ReselectionEUTRA": "1"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "_index": "packets-2024-03-14",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.encap_type": "45",
+          "frame.time": "Mar 14, 2024 21:34:55.660800000 CET",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1710448495.660800000",
+          "frame.time_delta": "6.426062000",
+          "frame.time_delta_displayed": "6.426062000",
+          "frame.time_relative": "6.426062000",
+          "frame.number": "2",
+          "frame.len": "30",
+          "frame.cap_len": "30",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "user_dlt:mac-lte-framed:mac-lte"
+        },
+        "user_dlt": "DLT: 147, Payload: mac-lte-framed (mac-lte-framed)",
+        "mac-lte": {
+          "mac-lte.context": "",
+          "mac-lte.context_tree": {
+            "mac-lte.radio-type": "1",
+            "mac-lte.direction": "1",
+            "mac-lte.sfn": "322",
+            "mac-lte.subframe": "6",
+            "mac-lte.rnti": "2",
+            "mac-lte.rnti-type": "2",
+            "mac-lte.is-predefined-frame": "0",
+            "mac-lte.length": "11",
+            "mac-lte.crc-status": "1",
+            "mac-lte.carrier-id": "0"
+          },
+          "mac-lte.rar": "",
+          "mac-lte.rar.headers": "",
+          "mac-lte.rar.headers_tree": {
+            "mac-lte.rar.header": "",
+            "mac-lte.rar.header_tree": {
+              "mac-lte.rar.e": "0x00",
+              "mac-lte.rar.t": "0x01",
+              "mac-lte.rar.rapid": "0x00"
+            },
+            "mac-lte.rar.no-of-rapids": "1"
+          },
+          "mac-lte.rar.body": "",
+          "mac-lte.rar.body_tree": {
+            "mac-lte.rar.reserved2": "0x00",
+            "mac-lte.rar.ta": "20",
+            "mac-lte.rar.ta_tree": {
+              "_ws.expert": {
+                "mac-lte.rar.ta.not-zero": "",
+                "_ws.expert.message": "RAR Timing advance not zero (20)",
+                "_ws.expert.severity": "4194304",
+                "_ws.expert.group": "33554432"
+              }
+            },
+            "mac-lte.rar.ul-grant": "52236",
+            "mac-lte.rar.ul-grant_tree": {
+              "mac-lte.rar.ul-grant.hopping": "0",
+              "mac-lte.rar.ul-grant.fsrba": "102",
+              "mac-lte.rar.ul-grant.tmcs": "0",
+              "mac-lte.rar.ul-grant.tcsp": "3",
+              "mac-lte.rar.ul-grant.ul-delay": "0",
+              "mac-lte.rar.ul-grant.cqi-request": "0"
+            },
+            "mac-lte.rar.temporary-crnti": "70"
+          },
+          "mac-lte.padding-data": "00:00:00:00",
+          "mac-lte.padding-length": "4"
+        }
+      }
+    }
+  },
+  {
+    "_index": "packets-2024-03-14",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.encap_type": "45",
+          "frame.time": "Mar 14, 2024 21:34:55.692324000 CET",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1710448495.692324000",
+          "frame.time_delta": "0.031524000",
+          "frame.time_delta_displayed": "0.031524000",
+          "frame.time_relative": "6.457586000",
+          "frame.number": "3",
+          "frame.len": "37",
+          "frame.cap_len": "37",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "user_dlt:mac-lte-framed:mac-lte"
+        },
+        "user_dlt": "DLT: 147, Payload: mac-lte-framed (mac-lte-framed)",
+        "mac-lte": {
+          "mac-lte.context": "",
+          "mac-lte.context_tree": {
+            "mac-lte.radio-type": "1",
+            "mac-lte.direction": "1",
+            "mac-lte.sfn": "326",
+            "mac-lte.subframe": "6",
+            "mac-lte.rnti": "2",
+            "mac-lte.rnti-type": "2",
+            "mac-lte.is-predefined-frame": "0",
+            "mac-lte.length": "18",
+            "mac-lte.crc-status": "1",
+            "mac-lte.carrier-id": "0"
+          },
+          "mac-lte.rar": "",
+          "mac-lte.rar.headers": "",
+          "mac-lte.rar.headers_tree": {
+            "mac-lte.rar.header": "",
+            "mac-lte.rar.header_tree": {
+              "mac-lte.rar.e": "0x01",
+              "mac-lte.rar.t": "0x01",
+              "mac-lte.rar.rapid": "0x29"
+            },
+            "mac-lte.rar.header": "",
+            "mac-lte.rar.header_tree": {
+              "mac-lte.rar.e": "0x00",
+              "mac-lte.rar.t": "0x01",
+              "mac-lte.rar.rapid": "0x2b"
+            },
+            "mac-lte.rar.no-of-rapids": "2"
+          },
+          "mac-lte.rar.body": "",
+          "mac-lte.rar.body_tree": {
+            "mac-lte.rar.reserved2": "0x00",
+            "mac-lte.rar.ta": "43",
+            "mac-lte.rar.ta_tree": {
+              "_ws.expert": {
+                "mac-lte.rar.ta.not-zero": "",
+                "_ws.expert.message": "RAR Timing advance not zero (43)",
+                "_ws.expert.severity": "6291456",
+                "_ws.expert.group": "33554432"
+              }
+            },
+            "mac-lte.rar.ul-grant": "52236",
+            "mac-lte.rar.ul-grant_tree": {
+              "mac-lte.rar.ul-grant.hopping": "0",
+              "mac-lte.rar.ul-grant.fsrba": "102",
+              "mac-lte.rar.ul-grant.tmcs": "0",
+              "mac-lte.rar.ul-grant.tcsp": "3",
+              "mac-lte.rar.ul-grant.ul-delay": "0",
+              "mac-lte.rar.ul-grant.cqi-request": "0"
+            },
+            "mac-lte.rar.temporary-crnti": "75"
+          },
+          "mac-lte.rar.body": "",
+          "mac-lte.rar.body_tree": {
+            "mac-lte.rar.reserved2": "0x00",
+            "mac-lte.rar.ta": "1",
+            "mac-lte.rar.ta_tree": {
+              "_ws.expert": {
+                "mac-lte.rar.ta.not-zero": "",
+                "_ws.expert.message": "RAR Timing advance not zero (1)",
+                "_ws.expert.severity": "4194304",
+                "_ws.expert.group": "33554432"
+              }
+            },
+            "mac-lte.rar.ul-grant": "53772",
+            "mac-lte.rar.ul-grant_tree": {
+              "mac-lte.rar.ul-grant.hopping": "0",
+              "mac-lte.rar.ul-grant.fsrba": "105",
+              "mac-lte.rar.ul-grant.tmcs": "0",
+              "mac-lte.rar.ul-grant.tcsp": "3",
+              "mac-lte.rar.ul-grant.ul-delay": "0",
+              "mac-lte.rar.ul-grant.cqi-request": "0"
+            },
+            "mac-lte.rar.temporary-crnti": "76"
+          },
+          "mac-lte.padding-data": "00:00:00:00",
+          "mac-lte.padding-length": "4"
+        }
+      }
+    }
+  },
+  {
+    "_index": "packets-2024-03-14",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.encap_type": "45",
+          "frame.time": "Mar 14, 2024 21:34:55.692996000 CET",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1710448495.692996000",
+          "frame.time_delta": "0.000672000",
+          "frame.time_delta_displayed": "0.000672000",
+          "frame.time_relative": "6.458258000",
+          "frame.number": "4",
+          "frame.len": "30",
+          "frame.cap_len": "30",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "user_dlt:mac-lte-framed:mac-lte"
+        },
+        "user_dlt": "DLT: 147, Payload: mac-lte-framed (mac-lte-framed)",
+        "mac-lte": {
+          "mac-lte.context": "",
+          "mac-lte.context_tree": {
+            "mac-lte.radio-type": "1",
+            "mac-lte.direction": "1",
+            "mac-lte.sfn": "326",
+            "mac-lte.subframe": "7",
+            "mac-lte.rnti": "2",
+            "mac-lte.rnti-type": "2",
+            "mac-lte.is-predefined-frame": "0",
+            "mac-lte.length": "11",
+            "mac-lte.crc-status": "1",
+            "mac-lte.carrier-id": "0"
+          },
+          "mac-lte.rar": "",
+          "mac-lte.rar.headers": "",
+          "mac-lte.rar.headers_tree": {
+            "mac-lte.rar.header": "",
+            "mac-lte.rar.header_tree": {
+              "mac-lte.rar.e": "0x00",
+              "mac-lte.rar.t": "0x01",
+              "mac-lte.rar.rapid": "0x2e"
+            },
+            "mac-lte.rar.no-of-rapids": "1"
+          },
+          "mac-lte.rar.body": "",
+          "mac-lte.rar.body_tree": {
+            "mac-lte.rar.reserved2": "0x00",
+            "mac-lte.rar.ta": "7",
+            "mac-lte.rar.ta_tree": {
+              "_ws.expert": {
+                "mac-lte.rar.ta.not-zero": "",
+                "_ws.expert.message": "RAR Timing advance not zero (7)",
+                "_ws.expert.severity": "4194304",
+                "_ws.expert.group": "33554432"
+              }
+            },
+            "mac-lte.rar.ul-grant": "52236",
+            "mac-lte.rar.ul-grant_tree": {
+              "mac-lte.rar.ul-grant.hopping": "0",
+              "mac-lte.rar.ul-grant.fsrba": "102",
+              "mac-lte.rar.ul-grant.tmcs": "0",
+              "mac-lte.rar.ul-grant.tcsp": "3",
+              "mac-lte.rar.ul-grant.ul-delay": "0",
+              "mac-lte.rar.ul-grant.cqi-request": "0"
+            },
+            "mac-lte.rar.temporary-crnti": "77"
+          },
+          "mac-lte.padding-data": "00:00:10:d2",
+          "mac-lte.padding-length": "4"
+        }
+      }
+    }
+  },
+  {
+    "_index": "packets-2024-03-14",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.encap_type": "45",
+          "frame.time": "Mar 14, 2024 21:34:55.697796000 CET",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1710448495.697796000",
+          "frame.time_delta": "0.004800000",
+          "frame.time_delta_displayed": "0.004800000",
+          "frame.time_relative": "6.463058000",
+          "frame.number": "5",
+          "frame.len": "26",
+          "frame.cap_len": "26",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "user_dlt:mac-lte-framed:mac-lte:lte_rrc"
+        },
+        "user_dlt": "DLT: 147, Payload: mac-lte-framed (mac-lte-framed)",
+        "mac-lte": {
+          "mac-lte.context": "",
+          "mac-lte.context_tree": {
+            "mac-lte.radio-type": "1",
+            "mac-lte.direction": "0",
+            "mac-lte.sfn": "327",
+            "mac-lte.subframe": "2",
+            "mac-lte.rnti": "76",
+            "mac-lte.rnti-type": "3",
+            "mac-lte.is-predefined-frame": "0",
+            "mac-lte.length": "7",
+            "mac-lte.ul-grant-size": "7",
+            "mac-lte.crc-status": "1",
+            "mac-lte.carrier-id": "0",
+            "mac-lte.ul-tti-count": "1"
+          },
+          "mac-lte.ulsch.header": "",
+          "mac-lte.ulsch.header_tree": {
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x00",
+              "mac-lte.ulsch.lcid": "0x00"
+            }
+          },
+          "mac-lte.sch.header-only": "0",
+          "mac-lte.sch.sdu": "5b:83:34:16:c2:58",
+          "lte_rrc": {
+            "lte_rrc": "LTE Radio Resource Control (RRC) protocol",
+            "lte-rrc.UL_CCCH_Message_element": {
+              "per.choice_index": "0",
+              "lte-rrc.uL_CCCH_Message.message": "0",
+              "lte-rrc.uL_CCCH_Message.message_tree": {
+                "per.choice_index": "1",
+                "lte-rrc.c1": "1",
+                "lte-rrc.c1_tree": {
+                  "lte-rrc.rrcConnectionRequest_element": {
+                    "per.choice_index": "0",
+                    "lte-rrc.criticalExtensions": "0",
+                    "lte-rrc.criticalExtensions_tree": {
+                      "lte-rrc.rrcConnectionRequest_r8_element": {
+                        "per.choice_index": "1",
+                        "lte-rrc.ue_Identity": "1",
+                        "lte-rrc.ue_Identity_tree": {
+                          "lte-rrc.randomValue": "b8:33:41:6c:25"
+                        },
+                        "per.enum_index": "4",
+                        "lte-rrc.establishmentCause": "4",
+                        "lte-rrc.spare": "00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "mac-lte.msg3-cr-response": "6"
+        },
+        "mac-lte.ulsch": ""
+      }
+    }
+  },
+  {
+    "_index": "packets-2024-03-14",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.encap_type": "45",
+          "frame.time": "Mar 14, 2024 21:34:55.705033000 CET",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1710448495.705033000",
+          "frame.time_delta": "0.007237000",
+          "frame.time_delta_displayed": "0.007237000",
+          "frame.time_relative": "6.470295000",
+          "frame.number": "6",
+          "frame.len": "51",
+          "frame.cap_len": "51",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "user_dlt:mac-lte-framed:mac-lte:lte_rrc"
+        },
+        "user_dlt": "DLT: 147, Payload: mac-lte-framed (mac-lte-framed)",
+        "mac-lte": {
+          "mac-lte.context": "",
+          "mac-lte.context_tree": {
+            "mac-lte.radio-type": "1",
+            "mac-lte.direction": "1",
+            "mac-lte.sfn": "327",
+            "mac-lte.subframe": "9",
+            "mac-lte.rnti": "76",
+            "mac-lte.rnti-type": "3",
+            "mac-lte.is-predefined-frame": "0",
+            "mac-lte.length": "32",
+            "mac-lte.crc-status": "1",
+            "mac-lte.carrier-id": "0",
+            "mac-lte.dl-tti-count": "1"
+          },
+          "mac-lte.dlsch.header": "",
+          "mac-lte.dlsch.header_tree": {
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x01",
+              "mac-lte.dlsch.lcid": "0x1c"
+            },
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x01",
+              "mac-lte.dlsch.lcid": "0x00",
+              "mac-lte.sch.format": "0",
+              "mac-lte.sch.length": "20"
+            },
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x00",
+              "mac-lte.dlsch.lcid": "0x1f"
+            }
+          },
+          "mac-lte.control.ue-contention-resolution": "",
+          "mac-lte.control.ue-contention-resolution_tree": {
+            "mac-lte.control.ue-contention-resolution.identity": "5b:83:34:16:c2:58",
+            "mac-lte.control.ue-contention-resolution.msg3": "5",
+            "mac-lte.control.ue-contention-resolution.time-since-msg3": "7",
+            "mac-lte.control.ue-contention-resolution.matches-msg3": "1"
+          },
+          "mac-lte.sch.header-only": "0",
+          "mac-lte.sch.sdu": "60:12:9b:2e:66:02:82:f2:e0:cc:c8:60:d3:00:00:99:02:00:03:e0",
+          "lte_rrc": {
+            "lte_rrc": "LTE Radio Resource Control (RRC) protocol",
+            "lte-rrc.DL_CCCH_Message_element": {
+              "per.choice_index": "0",
+              "lte-rrc.dL_CCCH_Message.message": "0",
+              "lte-rrc.dL_CCCH_Message.message_tree": {
+                "per.choice_index": "3",
+                "lte-rrc.c1": "3",
+                "lte-rrc.c1_tree": {
+                  "lte-rrc.rrcConnectionSetup_element": {
+                    "lte-rrc.rrc_TransactionIdentifier": "0",
+                    "per.choice_index": "0",
+                    "lte-rrc.criticalExtensions": "0",
+                    "lte-rrc.criticalExtensions_tree": {
+                      "per.choice_index": "0",
+                      "lte-rrc.c1": "0",
+                      "lte-rrc.c1_tree": {
+                        "lte-rrc.rrcConnectionSetup_r8_element": {
+                          "per.optional_field_bit": "0",
+                          "lte-rrc.radioResourceConfigDedicated_element": {
+                            "per.extension_bit": "0",
+                            "per.optional_field_bit": "1",
+                            "per.optional_field_bit": "0",
+                            "per.optional_field_bit": "0",
+                            "per.optional_field_bit": "1",
+                            "per.optional_field_bit": "0",
+                            "per.optional_field_bit": "1",
+                            "per.sequence_of_length": "1",
+                            "lte-rrc.srb_ToAddModList": "1",
+                            "lte-rrc.srb_ToAddModList_tree": {
+                              "Item 0": {
+                                "lte-rrc.SRB_ToAddMod_element": {
+                                  "per.extension_bit": "0",
+                                  "per.optional_field_bit": "1",
+                                  "per.optional_field_bit": "1",
+                                  "lte-rrc.srb_Identity": "1",
+                                  "per.choice_index": "1",
+                                  "lte-rrc.rlc_Config": "1",
+                                  "lte-rrc.rlc_Config_tree": {
+                                    "lte-rrc.defaultValue_element": ""
+                                  },
+                                  "per.choice_index": "1",
+                                  "lte-rrc.logicalChannelConfig": "1",
+                                  "lte-rrc.logicalChannelConfig_tree": {
+                                    "lte-rrc.defaultValue_element": ""
+                                  }
+                                }
+                              }
+                            },
+                            "per.choice_index": "0",
+                            "lte-rrc.mac_MainConfig": "0",
+                            "lte-rrc.mac_MainConfig_tree": {
+                              "lte-rrc.explicitValue_element": {
+                                "per.extension_bit": "0",
+                                "per.optional_field_bit": "1",
+                                "per.optional_field_bit": "0",
+                                "per.optional_field_bit": "1",
+                                "lte-rrc.ul_SCH_Config_element": {
+                                  "per.optional_field_bit": "1",
+                                  "per.optional_field_bit": "1",
+                                  "per.enum_index": "3",
+                                  "lte-rrc.maxHARQ_Tx": "3",
+                                  "per.enum_index": "3",
+                                  "lte-rrc.periodicBSR_Timer": "3",
+                                  "per.enum_index": "0",
+                                  "lte-rrc.retxBSR_Timer": "0",
+                                  "lte-rrc.ttiBundling": "0"
+                                },
+                                "per.enum_index": "0",
+                                "lte-rrc.timeAlignmentTimerDedicated": "0",
+                                "per.choice_index": "1",
+                                "lte-rrc.phr_Config": "1",
+                                "lte-rrc.phr_Config_tree": {
+                                  "lte-rrc.mAC_MainConfig.phr_Config.setup_element": {
+                                    "per.enum_index": "2",
+                                    "lte-rrc.periodicPHR_Timer": "2",
+                                    "per.enum_index": "0",
+                                    "lte-rrc.prohibitPHR_Timer": "0",
+                                    "per.enum_index": "1",
+                                    "lte-rrc.dl_PathlossChange": "1"
+                                  }
+                                }
+                              }
+                            },
+                            "lte-rrc.physicalConfigDedicated_element": {
+                              "per.extension_bit": "0",
+                              "per.optional_field_bit": "1",
+                              "per.optional_field_bit": "1",
+                              "per.optional_field_bit": "1",
+                              "per.optional_field_bit": "1",
+                              "per.optional_field_bit": "0",
+                              "per.optional_field_bit": "0",
+                              "per.optional_field_bit": "1",
+                              "per.optional_field_bit": "0",
+                              "per.optional_field_bit": "1",
+                              "per.optional_field_bit": "1",
+                              "lte-rrc.pdsch_ConfigDedicated_element": {
+                                "per.enum_index": "4",
+                                "lte-rrc.p_a": "4"
+                              },
+                              "lte-rrc.pucch_ConfigDedicated_element": {
+                                "per.optional_field_bit": "0",
+                                "per.choice_index": "0",
+                                "lte-rrc.ackNackRepetition": "0",
+                                "lte-rrc.ackNackRepetition_tree": {
+                                  "lte-rrc.release_element": ""
+                                }
+                              },
+                              "lte-rrc.pusch_ConfigDedicated_element": {
+                                "lte-rrc.betaOffset_ACK_Index": "6",
+                                "lte-rrc.betaOffset_RI_Index": "6",
+                                "lte-rrc.betaOffset_CQI_Index": "6"
+                              },
+                              "lte-rrc.uplinkPowerControlDedicated_element": {
+                                "per.optional_field_bit": "0",
+                                "lte-rrc.p0_UE_PUSCH": "0",
+                                "per.enum_index": "0",
+                                "lte-rrc.deltaMCS_Enabled": "0",
+                                "lte-rrc.accumulationEnabled": "1",
+                                "lte-rrc.p0_UE_PUCCH": "0",
+                                "lte-rrc.pSRS_Offset": "3"
+                              },
+                              "lte-rrc.cqi_ReportConfig_element": {
+                                "per.optional_field_bit": "0",
+                                "per.optional_field_bit": "1",
+                                "lte-rrc.nomPDSCH_RS_EPRE_Offset": "0",
+                                "per.choice_index": "1",
+                                "lte-rrc.cqi_ReportPeriodic": "1",
+                                "lte-rrc.cqi_ReportPeriodic_tree": {
+                                  "lte-rrc.cQI_ReportPeriodic.setup_element": {
+                                    "per.optional_field_bit": "0",
+                                    "lte-rrc.cqi_PUCCH_ResourceIndex": "0",
+                                    "lte-rrc.cqi_pmi_ConfigIndex": "38",
+                                    "per.choice_index": "0",
+                                    "lte-rrc.cqi_FormatIndicatorPeriodic": "0",
+                                    "lte-rrc.cqi_FormatIndicatorPeriodic_tree": {
+                                      "lte-rrc.widebandCQI_element": ""
+                                    },
+                                    "lte-rrc.simultaneousAckNackAndCQI": "1"
+                                  }
+                                }
+                              },
+                              "per.choice_index": "0",
+                              "lte-rrc.antennaInfo": "0",
+                              "lte-rrc.antennaInfo_tree": {
+                                "lte-rrc.explicitValue_element": {
+                                  "per.optional_field_bit": "0",
+                                  "per.enum_index": "0",
+                                  "lte-rrc.transmissionMode": "0",
+                                  "per.choice_index": "0",
+                                  "lte-rrc.ue_TransmitAntennaSelection": "0",
+                                  "lte-rrc.ue_TransmitAntennaSelection_tree": {
+                                    "lte-rrc.release_element": ""
+                                  }
+                                }
+                              },
+                              "per.choice_index": "1",
+                              "lte-rrc.schedulingRequestConfig": "1",
+                              "lte-rrc.schedulingRequestConfig_tree": {
+                                "lte-rrc.schedulingRequestConfig.setup_element": {
+                                  "lte-rrc.sr_PUCCH_ResourceIndex": "0",
+                                  "lte-rrc.sr_ConfigIndex": "15",
+                                  "lte-rrc.sr_ConfigIndex_tree": {
+                                    "lte-rrc.sr_Periodicity": "20",
+                                    "lte-rrc.sr_SubframeOffset": "0"
+                                  },
+                                  "per.enum_index": "4",
+                                  "lte-rrc.dsr_TransMax": "4"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "mac-lte.padding-data": "00:00",
+          "mac-lte.padding-length": "2"
+        },
+        "mac-lte.dlsch": ""
+      }
+    }
+  },
+  {
+    "_index": "packets-2024-03-14",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.encap_type": "45",
+          "frame.time": "Mar 14, 2024 21:34:55.734360000 CET",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1710448495.734360000",
+          "frame.time_delta": "0.029327000",
+          "frame.time_delta_displayed": "0.029327000",
+          "frame.time_relative": "6.499622000",
+          "frame.number": "7",
+          "frame.len": "176",
+          "frame.cap_len": "176",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "user_dlt:mac-lte-framed:mac-lte:rlc-lte:pdcp-lte:lte_rrc:nas-eps"
+        },
+        "user_dlt": "DLT: 147, Payload: mac-lte-framed (mac-lte-framed)",
+        "mac-lte": {
+          "mac-lte.context": "",
+          "mac-lte.context_tree": {
+            "mac-lte.radio-type": "1",
+            "mac-lte.direction": "0",
+            "mac-lte.sfn": "330",
+            "mac-lte.subframe": "8",
+            "mac-lte.rnti": "76",
+            "mac-lte.rnti-type": "3",
+            "mac-lte.is-predefined-frame": "0",
+            "mac-lte.length": "157",
+            "mac-lte.ul-grant-size": "157",
+            "mac-lte.crc-status": "1",
+            "mac-lte.carrier-id": "0",
+            "mac-lte.ul-tti-count": "1"
+          },
+          "mac-lte.ulsch.header": "",
+          "mac-lte.ulsch.header_tree": {
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x01",
+              "mac-lte.ulsch.lcid": "0x1a"
+            },
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x01",
+              "mac-lte.ulsch.lcid": "0x1e"
+            },
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x01",
+              "mac-lte.ulsch.lcid": "0x01",
+              "mac-lte.sch.format": "0",
+              "mac-lte.sch.length": "31"
+            },
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x00",
+              "mac-lte.ulsch.lcid": "0x1f"
+            }
+          },
+          "mac-lte.control.power-headroom": "",
+          "mac-lte.control.power-headroom_tree": {
+            "mac-lte.control.power-headroom.reserved": "0",
+            "mac-lte.control.power-headroom.level": "63"
+          },
+          "mac-lte.control.bsr": "",
+          "mac-lte.control.bsr_tree": {
+            "mac-lte.control.bsr.buffer-size-0": "0",
+            "mac-lte.control.bsr.buffer-size-1": "0",
+            "mac-lte.control.bsr.buffer-size-2": "0",
+            "mac-lte.control.bsr.buffer-size-3": "0"
+          },
+          "mac-lte.sch.header-only": "0",
+          "mac-lte.sch.sdu": "a0:00:00:20:00:2a:0e:82:e2:11:33:32:0e:20:64:a8:ec:10:05:e0:e0:00:08:04:03:a0:22:00:00:00:00",
+          "rlc-lte": {
+            "rlc-lte.context": "",
+            "rlc-lte.context_tree": {
+              "rlc-lte.direction": "0",
+              "rlc-lte.mode": "4",
+              "rlc-lte.channel-type": "4",
+              "rlc-lte.channel-id": "1",
+              "rlc-lte.pdu-length": "31",
+              "rlc-lte.am-seqnum-length": "10"
+            },
+            "rlc-lte.am": "",
+            "rlc-lte.am.header": "",
+            "rlc-lte.am.header_tree": {
+              "rlc-lte.am.frame-type": "0x01",
+              "rlc-lte.am.rf": "0x00",
+              "rlc-lte.am.p": "0x01",
+              "rlc-lte.am.fi": "0x00",
+              "rlc-lte.am.fixed.e": "0x00",
+              "rlc-lte.am.fixed.sn": "0"
+            },
+            "rlc-lte.sequence-analysis": "",
+            "rlc-lte.sequence-analysis_tree": {
+              "rlc-lte.sequence-analysis.ok": "1"
+            },
+            "rlc-lte.am.data": "00:20:00:2a:0e:82:e2:11:33:32:0e:20:64:a8:ec:10:05:e0:e0:00:08:04:03:a0:22:00:00:00:00",
+            "pdcp-lte": {
+              "pdcp-lte.configuration": "",
+              "pdcp-lte.configuration_tree": {
+                "pdcp-lte.direction": "0",
+                "pdcp-lte.plane": "1",
+                "pdcp-lte.channel-type": "1",
+                "pdcp-lte.channel-id": "1",
+                "pdcp-lte.rohc.compression": "0"
+              },
+              "pdcp-lte.reserved": "0",
+              "pdcp-lte.seq-num": "0",
+              "pdcp-lte.sequence-analysis": "",
+              "pdcp-lte.sequence-analysis_tree": {
+                "pdcp-lte.sequence-analysis.expected-sn": "0",
+                "pdcp-lte.sequence-analysis.ok": "1"
+              },
+              "lte_rrc": {
+                "lte_rrc": "LTE Radio Resource Control (RRC) protocol",
+                "lte-rrc.UL_DCCH_Message_element": {
+                  "per.choice_index": "0",
+                  "lte-rrc.uL_DCCH_Message.message": "0",
+                  "lte-rrc.uL_DCCH_Message.message_tree": {
+                    "per.choice_index": "4",
+                    "lte-rrc.c1": "4",
+                    "lte-rrc.c1_tree": {
+                      "lte-rrc.rrcConnectionSetupComplete_element": {
+                        "lte-rrc.rrc_TransactionIdentifier": "0",
+                        "per.choice_index": "0",
+                        "lte-rrc.criticalExtensions": "0",
+                        "lte-rrc.criticalExtensions_tree": {
+                          "per.choice_index": "0",
+                          "lte-rrc.c1": "0",
+                          "lte-rrc.c1_tree": {
+                            "lte-rrc.rrcConnectionSetupComplete_r8_element": {
+                              "per.optional_field_bit": "0",
+                              "per.optional_field_bit": "0",
+                              "lte-rrc.selectedPLMN_Identity": "1",
+                              "per.octet_string_length": "21",
+                              "lte-rrc.dedicatedInfoNAS": "07:41:71:08:99:99:07:10:32:54:76:08:02:f0:70:00:04:02:01:d0:11",
+                              "lte-rrc.dedicatedInfoNAS_tree": {
+                                "nas-eps": {
+                                  "nas_eps.security_header_type": "0",
+                                  "gsm_a.L3_protocol_discriminator": "0x07",
+                                  "nas_eps.nas_msg_emm_type": "0x41",
+                                  "nas_eps.emm.tsc": "0",
+                                  "nas_eps.emm.nas_key_set_id": "7",
+                                  "nas_eps.spare_bits": "0x00",
+                                  "nas_eps.emm.eps_att_type": "1",
+                                  "EPS mobile identity": {
+                                    "gsm_a.len": "8",
+                                    "nas_eps.emm.odd_even": "1",
+                                    "nas_eps.emm.type_of_id": "1",
+                                    "e212.imsi": "999700123456780",
+                                    "e212.assoc.imsi": "999700123456780",
+                                    "e212.assoc.imsi_tree": {
+                                      "e212.mcc": "999",
+                                      "e212.mnc": "700"
+                                    }
+                                  },
+                                  "UE network capability": {
+                                    "gsm_a.len": "2",
+                                    "nas_eps.emm.eea0": "1",
+                                    "nas_eps.emm.128eea1": "1",
+                                    "nas_eps.emm.128eea2": "1",
+                                    "nas_eps.emm.eea3": "1",
+                                    "nas_eps.emm.eea4": "0",
+                                    "nas_eps.emm.eea5": "0",
+                                    "nas_eps.emm.eea6": "0",
+                                    "nas_eps.emm.eea7": "0",
+                                    "nas_eps.emm.eia0": "0",
+                                    "nas_eps.emm.128eia1": "1",
+                                    "nas_eps.emm.128eia2": "1",
+                                    "nas_eps.emm.eia3": "1",
+                                    "nas_eps.emm.eia4": "0",
+                                    "nas_eps.emm.eia5": "0",
+                                    "nas_eps.emm.eia6": "0",
+                                    "nas_eps.emm.eia7": "0"
+                                  },
+                                  "ESM message container": {
+                                    "gsm_a.len": "4",
+                                    "nas_eps.emm.esm_msg_cont": "02:01:d0:11",
+                                    "nas_eps.emm.esm_msg_cont_tree": {
+                                      "nas_eps.bearer_id": "0",
+                                      "gsm_a.L3_protocol_discriminator": "0x02",
+                                      "nas_eps.esm.proc_trans_id": "1",
+                                      "nas_eps.nas_msg_esm_type": "0xd0",
+                                      "nas_eps.esm_pdn_type": "1",
+                                      "nas_eps.esm_request_type": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "pdcp-lte.mac": "0x00000000"
+            }
+          },
+          "mac-lte.padding-data": "00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00",
+          "mac-lte.padding-length": "117"
+        },
+        "mac-lte.ulsch": ""
+      }
+    }
+  },
+  {
+    "_index": "packets-2024-03-14",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.encap_type": "45",
+          "frame.time": "Mar 14, 2024 21:34:55.737843000 CET",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1710448495.737843000",
+          "frame.time_delta": "0.003483000",
+          "frame.time_delta_displayed": "0.003483000",
+          "frame.time_relative": "6.503105000",
+          "frame.number": "8",
+          "frame.len": "26",
+          "frame.cap_len": "26",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "user_dlt:mac-lte-framed:mac-lte"
+        },
+        "user_dlt": "DLT: 147, Payload: mac-lte-framed (mac-lte-framed)",
+        "mac-lte": {
+          "mac-lte.context": "",
+          "mac-lte.context_tree": {
+            "mac-lte.radio-type": "1",
+            "mac-lte.direction": "1",
+            "mac-lte.sfn": "331",
+            "mac-lte.subframe": "2",
+            "mac-lte.rnti": "76",
+            "mac-lte.rnti-type": "3",
+            "mac-lte.is-predefined-frame": "0",
+            "mac-lte.length": "7",
+            "mac-lte.crc-status": "1",
+            "mac-lte.carrier-id": "0",
+            "mac-lte.dl-tti-count": "1"
+          },
+          "mac-lte.dlsch.header": "",
+          "mac-lte.dlsch.header_tree": {
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x01",
+              "mac-lte.dlsch.lcid": "0x1d"
+            },
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x00",
+              "mac-lte.dlsch.lcid": "0x1f"
+            }
+          },
+          "mac-lte.control.timing-advance": "",
+          "mac-lte.control.timing-advance_tree": {
+            "mac-lte.control.timing-advance.group-id": "0",
+            "mac-lte.control.timing-advance.command": "33",
+            "mac-lte.control.timing-advance.command_tree": {
+              "_ws.expert": {
+                "mac-lte.control.timing-advance.correction-needed": "",
+                "_ws.expert.message": "Timing Advance control element received (33) +ve correction needed",
+                "_ws.expert.severity": "6291456",
+                "_ws.expert.group": "33554432"
+              }
+            }
+          },
+          "mac-lte.sch.header-only": "0",
+          "mac-lte.padding-data": "00:00:00:00",
+          "mac-lte.padding-length": "4"
+        },
+        "mac-lte.dlsch": ""
+      }
+    }
+  },
+  {
+    "_index": "packets-2024-03-14",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.encap_type": "45",
+          "frame.time": "Mar 14, 2024 21:34:55.738714000 CET",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1710448495.738714000",
+          "frame.time_delta": "0.000871000",
+          "frame.time_delta_displayed": "0.000871000",
+          "frame.time_relative": "6.503976000",
+          "frame.number": "9",
+          "frame.len": "26",
+          "frame.cap_len": "26",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "user_dlt:mac-lte-framed:mac-lte:rlc-lte"
+        },
+        "user_dlt": "DLT: 147, Payload: mac-lte-framed (mac-lte-framed)",
+        "mac-lte": {
+          "mac-lte.context": "",
+          "mac-lte.context_tree": {
+            "mac-lte.radio-type": "1",
+            "mac-lte.direction": "1",
+            "mac-lte.sfn": "331",
+            "mac-lte.subframe": "3",
+            "mac-lte.rnti": "76",
+            "mac-lte.rnti-type": "3",
+            "mac-lte.is-predefined-frame": "0",
+            "mac-lte.length": "7",
+            "mac-lte.crc-status": "1",
+            "mac-lte.carrier-id": "0",
+            "mac-lte.dl-tti-count": "1"
+          },
+          "mac-lte.dlsch.header": "",
+          "mac-lte.dlsch.header_tree": {
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x01",
+              "mac-lte.dlsch.lcid": "0x01",
+              "mac-lte.sch.format": "0",
+              "mac-lte.sch.length": "2"
+            },
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x00",
+              "mac-lte.dlsch.lcid": "0x1f"
+            }
+          },
+          "mac-lte.sch.header-only": "0",
+          "mac-lte.sch.sdu": "00:04",
+          "rlc-lte": {
+            "rlc-lte.context": "",
+            "rlc-lte.context_tree": {
+              "rlc-lte.direction": "1",
+              "rlc-lte.mode": "4",
+              "rlc-lte.channel-type": "4",
+              "rlc-lte.channel-id": "1",
+              "rlc-lte.pdu-length": "2",
+              "rlc-lte.am-seqnum-length": "10"
+            },
+            "rlc-lte.am": "",
+            "rlc-lte.am.header": "",
+            "rlc-lte.am.header_tree": {
+              "rlc-lte.am.frame-type": "0x00",
+              "rlc-lte.am.cpt": "0x00",
+              "rlc-lte.am.ack-sn": "1",
+              "rlc-lte.am.e1": "0x00"
+            }
+          },
+          "mac-lte.padding-data": "00:00",
+          "mac-lte.padding-length": "2"
+        },
+        "mac-lte.dlsch": ""
+      }
+    }
+  },
+  {
+    "_index": "packets-2024-03-14",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.encap_type": "45",
+          "frame.time": "Mar 14, 2024 21:34:55.751632000 CET",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1710448495.751632000",
+          "frame.time_delta": "0.012918000",
+          "frame.time_delta_displayed": "0.012918000",
+          "frame.time_relative": "6.516894000",
+          "frame.number": "10",
+          "frame.len": "37",
+          "frame.cap_len": "37",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "user_dlt:mac-lte-framed:mac-lte:rlc-lte:pdcp-lte:lte_rrc"
+        },
+        "user_dlt": "DLT: 147, Payload: mac-lte-framed (mac-lte-framed)",
+        "mac-lte": {
+          "mac-lte.context": "",
+          "mac-lte.context_tree": {
+            "mac-lte.radio-type": "1",
+            "mac-lte.direction": "1",
+            "mac-lte.sfn": "332",
+            "mac-lte.subframe": "4",
+            "mac-lte.rnti": "76",
+            "mac-lte.rnti-type": "3",
+            "mac-lte.is-predefined-frame": "0",
+            "mac-lte.length": "18",
+            "mac-lte.crc-status": "1",
+            "mac-lte.carrier-id": "0",
+            "mac-lte.dl-tti-count": "1"
+          },
+          "mac-lte.dlsch.header": "",
+          "mac-lte.dlsch.header_tree": {
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x01",
+              "mac-lte.dlsch.lcid": "0x01",
+              "mac-lte.sch.format": "0",
+              "mac-lte.sch.length": "9"
+            },
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x00",
+              "mac-lte.dlsch.lcid": "0x1f"
+            }
+          },
+          "mac-lte.sch.header-only": "0",
+          "mac-lte.sch.sdu": "a0:00:01:28:02:00:00:00:00",
+          "rlc-lte": {
+            "rlc-lte.context": "",
+            "rlc-lte.context_tree": {
+              "rlc-lte.direction": "1",
+              "rlc-lte.mode": "4",
+              "rlc-lte.channel-type": "4",
+              "rlc-lte.channel-id": "1",
+              "rlc-lte.pdu-length": "9",
+              "rlc-lte.am-seqnum-length": "10"
+            },
+            "rlc-lte.am": "",
+            "rlc-lte.am.header": "",
+            "rlc-lte.am.header_tree": {
+              "rlc-lte.am.frame-type": "0x01",
+              "rlc-lte.am.rf": "0x00",
+              "rlc-lte.am.p": "0x01",
+              "rlc-lte.am.fi": "0x00",
+              "rlc-lte.am.fixed.e": "0x00",
+              "rlc-lte.am.fixed.sn": "0"
+            },
+            "rlc-lte.sequence-analysis": "",
+            "rlc-lte.sequence-analysis_tree": {
+              "rlc-lte.sequence-analysis.ok": "1"
+            },
+            "rlc-lte.am.data": "01:28:02:00:00:00:00",
+            "pdcp-lte": {
+              "pdcp-lte.configuration": "",
+              "pdcp-lte.configuration_tree": {
+                "pdcp-lte.direction": "1",
+                "pdcp-lte.plane": "1",
+                "pdcp-lte.channel-type": "1",
+                "pdcp-lte.channel-id": "1",
+                "pdcp-lte.rohc.compression": "0"
+              },
+              "pdcp-lte.reserved": "0",
+              "pdcp-lte.seq-num": "1",
+              "pdcp-lte.sequence-analysis": "",
+              "pdcp-lte.sequence-analysis_tree": {
+                "pdcp-lte.sequence-analysis.expected-sn": "1",
+                "pdcp-lte.sequence-analysis.ok": "1"
+              },
+              "lte_rrc": {
+                "lte_rrc": "LTE Radio Resource Control (RRC) protocol",
+                "lte-rrc.DL_DCCH_Message_element": {
+                  "per.choice_index": "0",
+                  "lte-rrc.dL_DCCH_Message.message": "0",
+                  "lte-rrc.dL_DCCH_Message.message_tree": {
+                    "per.choice_index": "5",
+                    "lte-rrc.c1": "5",
+                    "lte-rrc.c1_tree": {
+                      "lte-rrc.rrcConnectionRelease_element": {
+                        "lte-rrc.rrc_TransactionIdentifier": "0",
+                        "per.choice_index": "0",
+                        "lte-rrc.criticalExtensions": "0",
+                        "lte-rrc.criticalExtensions_tree": {
+                          "per.choice_index": "0",
+                          "lte-rrc.c1": "0",
+                          "lte-rrc.c1_tree": {
+                            "lte-rrc.rrcConnectionRelease_r8_element": {
+                              "per.optional_field_bit": "0",
+                              "per.optional_field_bit": "0",
+                              "per.optional_field_bit": "0",
+                              "per.enum_index": "1",
+                              "lte-rrc.releaseCause": "1"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "pdcp-lte.mac": "0x00000000"
+            }
+          },
+          "mac-lte.padding-data": "00:00:00:00:00:00",
+          "mac-lte.padding-length": "6"
+        },
+        "mac-lte.dlsch": ""
+      }
+    }
+  },
+  {
+    "_index": "packets-2024-03-14",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.encap_type": "45",
+          "frame.time": "Mar 14, 2024 21:34:55.778107000 CET",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1710448495.778107000",
+          "frame.time_delta": "0.026475000",
+          "frame.time_delta_displayed": "0.026475000",
+          "frame.time_relative": "6.543369000",
+          "frame.number": "11",
+          "frame.len": "552",
+          "frame.cap_len": "552",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "user_dlt:mac-lte-framed:mac-lte:rlc-lte"
+        },
+        "user_dlt": "DLT: 147, Payload: mac-lte-framed (mac-lte-framed)",
+        "mac-lte": {
+          "mac-lte.context": "",
+          "mac-lte.context_tree": {
+            "mac-lte.radio-type": "1",
+            "mac-lte.direction": "0",
+            "mac-lte.sfn": "334",
+            "mac-lte.subframe": "8",
+            "mac-lte.rnti": "76",
+            "mac-lte.rnti-type": "3",
+            "mac-lte.is-predefined-frame": "0",
+            "mac-lte.length": "533",
+            "mac-lte.ul-grant-size": "533",
+            "mac-lte.crc-status": "1",
+            "mac-lte.carrier-id": "0",
+            "mac-lte.ul-tti-count": "1"
+          },
+          "mac-lte.ulsch.header": "",
+          "mac-lte.ulsch.header_tree": {
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x01",
+              "mac-lte.ulsch.lcid": "0x1e"
+            },
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x01",
+              "mac-lte.ulsch.lcid": "0x01",
+              "mac-lte.sch.format": "0",
+              "mac-lte.sch.length": "2"
+            },
+            "mac-lte.sch.subheader": "",
+            "mac-lte.sch.subheader_tree": {
+              "mac-lte.sch.reserved": "0x00",
+              "mac-lte.sch.format2": "0",
+              "mac-lte.sch.extended": "0x00",
+              "mac-lte.ulsch.lcid": "0x1f"
+            }
+          },
+          "mac-lte.control.bsr": "",
+          "mac-lte.control.bsr_tree": {
+            "mac-lte.control.bsr.buffer-size-0": "0",
+            "mac-lte.control.bsr.buffer-size-1": "0",
+            "mac-lte.control.bsr.buffer-size-2": "0",
+            "mac-lte.control.bsr.buffer-size-3": "0"
+          },
+          "mac-lte.sch.header-only": "0",
+          "mac-lte.sch.sdu": "00:04",
+          "rlc-lte": {
+            "rlc-lte.context": "",
+            "rlc-lte.context_tree": {
+              "rlc-lte.direction": "0",
+              "rlc-lte.mode": "4",
+              "rlc-lte.channel-type": "4",
+              "rlc-lte.channel-id": "1",
+              "rlc-lte.pdu-length": "2",
+              "rlc-lte.am-seqnum-length": "10"
+            },
+            "rlc-lte.am": "",
+            "rlc-lte.am.header": "",
+            "rlc-lte.am.header_tree": {
+              "rlc-lte.am.frame-type": "0x00",
+              "rlc-lte.am.cpt": "0x00",
+              "rlc-lte.am.ack-sn": "1",
+              "rlc-lte.am.e1": "0x00"
+            }
+          },
+          "mac-lte.padding-data": "00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00",
+          "mac-lte.padding-length": "524"
+        },
+        "mac-lte.ulsch": ""
+      }
+    }
+  }
+]

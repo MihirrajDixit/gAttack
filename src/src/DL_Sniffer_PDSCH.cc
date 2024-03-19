@@ -142,6 +142,17 @@ int PDSCH_Decoder::decode_rrc_connection_setup(uint8_t *sdu_ptr, int length, gAt
 	{
 		if (dl_ccch_msg.msg.c1().type().value == dl_ccch_msg_type_c::c1_c_::types::rrc_conn_setup)
 		{
+			uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+            printf("RRC Connection Setup - Sniffer Received - %lu\n", ns);
+            std::ofstream myfile;
+            myfile.open ("timing.csv", std::ios_base::app);
+            if (myfile.is_open()) { // Check if the file is successfully opened
+                myfile << "RRC Connection Setup,Sniffer Received," << ns << std::endl; // Write data to the file
+                myfile.close(); // Close the file
+                std::cout << "Data written to timing.csv successfully." << std::endl; // Optional: Print a success message
+            } else {
+                std::cerr << "Error opening file." << std::endl; // Print an error message if the file couldn't be opened
+            }
 			asn1::rrc::rrc_conn_setup_s con_setup = dl_ccch_msg.msg.c1().rrc_conn_setup();
 			rrc_conn_setup_r8_ies_s *msg_r8 = &con_setup.crit_exts.c1().rrc_conn_setup_r8();
 			rrc_con_set.rr_cfg_ded.phys_cfg_ded.pusch_cfg_ded.beta_offset_ack_idx = msg_r8->rr_cfg_ded.phys_cfg_ded.pusch_cfg_ded.beta_offset_ack_idx;
@@ -632,6 +643,17 @@ int PDSCH_Decoder::unpack_rar_response_ul_mode(uint8_t *payload, int length, DL_
 			ul_sniffer_ra_ul_dci_to_grant(&falcon_ue_dl->q->cell, &ul_sf, &hopping_cfg, &dci_ul, &result.ran_ul_grant);
 			rntiManager.activateAndRefresh(result.t_crnti, 0, ActivationReason::RM_ACT_RAR); // add RNTI in RAR response to active list
 			std::cout << " RAR: " << "TA = " << result.ta << std::endl;
+			uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+            printf("RAR - Sniffer Received - %lu\n", ns);
+            std::ofstream myfile;
+            myfile.open ("timing.csv", std::ios_base::app);
+            if (myfile.is_open()) { // Check if the file is successfully opened
+                myfile << "RAR,Sniffer Received," << ns << std::endl; // Write data to the file
+                myfile.close(); // Close the file
+                std::cout << "Data written to timing.csv successfully." << std::endl; // Optional: Print a success message
+            } else {
+                std::cerr << "Error opening file." << std::endl; // Print an error message if the file couldn't be opened
+            }
 			double distance_ta = ((16 * 0.5 * 3 * std::pow(10,8))*(result.ta) /(15000*2048));
 			std::cout << "currentDateTime()=" << currentDateTime() << std::endl;
 			printf("current time in epoch %lu\n", ltetimer->nanos());
