@@ -94,7 +94,7 @@ public:
                            uint32_t sfn,
                            uint32_t sf_idx);
     void unpack_pdsch_message(uint8_t* sdu_ptr, int length);
-    int  decode_rrc_connection_setup(uint8_t* sdu_ptr, int length, gAttack_ue_spec_config_t *ue_config);                       
+    int  decode_rrc_connection_setup(uint8_t* sdu_ptr, int length, gAttack_ue_spec_config_t *ue_config, uint64_t ns);                       
     int  decode_imsi_tmsi_paging(uint8_t* sdu_ptr, int length);
 
     int  run_decode(int &mimo_ret,
@@ -104,13 +104,13 @@ public:
                     uint32_t cur_rnti,
                     std::string table, 
                     std::string rnti_name,
-                    uint32_t tti);
+                    uint32_t tti, uint64_t ns);
     int decode_SIB();
-    int decode_dl_mode();
+    int decode_dl_mode(uint64_t ns);
 
-    int decode_mac_ce(uint32_t rnti);
+    int decode_mac_ce(uint32_t rnti, uint64_t ns);
 
-    int decode_ul_mode(uint32_t rnti, std::vector<DL_Sniffer_rar_result> *rar_result);
+    int decode_ul_mode(uint32_t rnti, std::vector<DL_Sniffer_rar_result> *rar_result, uint64_t ns);
     
     asn1::rrc::sib_type2_s* getSIB2(){ return &sib2; }
 
@@ -123,9 +123,9 @@ public:
                         srsran_dci_dl_t *cur_ran_dci_dl,
                         srsran_pdsch_grant_t *cur_grant,
                         uint32_t cur_rnti,
-                        DL_Sniffer_rar_result &result);
-    int decode_rar(DL_Sniffer_rar_result &result);
-    int unpack_rar_response_ul_mode(uint8_t *payload, int length, DL_Sniffer_rar_result &result);
+                        DL_Sniffer_rar_result &result, uint64_t ns);
+    int decode_rar(DL_Sniffer_rar_result &result, uint64_t ns);
+    int unpack_rar_response_ul_mode(uint8_t *payload, int length, DL_Sniffer_rar_result &result, uint64_t ns);
 
     void set_hopping(srsran_pusch_hopping_cfg_t hopping_cfg_)
     {

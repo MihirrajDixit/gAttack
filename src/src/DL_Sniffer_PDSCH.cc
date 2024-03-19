@@ -133,7 +133,7 @@ int PDSCH_Decoder::decode_imsi_tmsi_paging(uint8_t *sdu_ptr, int length)
 // 	myue.send_connection_release();
 // }	
 
-int PDSCH_Decoder::decode_rrc_connection_setup(uint8_t *sdu_ptr, int length, gAttack_ue_spec_config_t *ue_config)
+int PDSCH_Decoder::decode_rrc_connection_setup(uint8_t *sdu_ptr, int length, gAttack_ue_spec_config_t *ue_config, uint64_t ns)
 {
 	dl_ccch_msg_s dl_ccch_msg;
 	asn1::cbit_ref bref(sdu_ptr, length);
@@ -142,14 +142,14 @@ int PDSCH_Decoder::decode_rrc_connection_setup(uint8_t *sdu_ptr, int length, gAt
 	{
 		if (dl_ccch_msg.msg.c1().type().value == dl_ccch_msg_type_c::c1_c_::types::rrc_conn_setup)
 		{
-			uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+			// uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
             printf("RRC Connection Setup - Sniffer Received - %lu\n", ns);
             std::ofstream myfile;
-            myfile.open ("timing.csv", std::ios_base::app);
+            myfile.open ("timing_sniffer.csv", std::ios_base::app);
             if (myfile.is_open()) { // Check if the file is successfully opened
                 myfile << "RRC Connection Setup,Sniffer Received," << ns << std::endl; // Write data to the file
                 myfile.close(); // Close the file
-                std::cout << "Data written to timing.csv successfully." << std::endl; // Optional: Print a success message
+                std::cout << "Data written to timing_sniffer.csv successfully." << std::endl; // Optional: Print a success message
             } else {
                 std::cerr << "Error opening file." << std::endl; // Print an error message if the file couldn't be opened
             }
@@ -204,7 +204,7 @@ int PDSCH_Decoder::run_decode(int &mimo_ret,
 							  uint32_t cur_rnti,
 							  std::string table,
 							  std::string RNTI_name,
-							  uint32_t tti)
+							  uint32_t tti, uint64_t ns)
 {
 	int ret = 0;
 	mimo_ret = dl_sniffer_config_mimo(&falcon_ue_dl->q->cell, cur_format, cur_ran_dci_dl, cur_grant);
@@ -269,7 +269,7 @@ int PDSCH_Decoder::run_decode(int &mimo_ret,
 						uint8_t *sdu_ptr = pdu.get()->get_sdu_ptr();
 						/* Decode RRC Connection Setup when found valid sdu from MAC pdu*/
 						gAttack_ue_spec_config_t ue_config;
-						int rrc_ret = decode_rrc_connection_setup(sdu_ptr, payload_length, &ue_config);
+						int rrc_ret = decode_rrc_connection_setup(sdu_ptr, payload_length, &ue_config, ns);
 						if (rrc_ret == SRSRAN_SUCCESS)
 						{ // success means RRC Connection Setup
 							is_rrc_connection_setup = true;
@@ -320,7 +320,7 @@ int PDSCH_Decoder::run_decode(int &mimo_ret,
 	}
 }
 
-int PDSCH_Decoder::decode_ul_mode(uint32_t rnti, std::vector<DL_Sniffer_rar_result> *rar_result)
+int PDSCH_Decoder::decode_ul_mode(uint32_t rnti, std::vector<DL_Sniffer_rar_result> *rar_result, uint64_t ns)
 {
 	uint32_t tti = sfn * 10 + sf_idx;
 	for (auto decoding_mem : (*ran_dl_collection))
@@ -347,7 +347,7 @@ int PDSCH_Decoder::decode_ul_mode(uint32_t rnti, std::vector<DL_Sniffer_rar_resu
 
 			/*try only 64QAM table*/
 			DL_Sniffer_rar_result result;
-			int ret = run_rar_decode(cur_format, cur_ran_dci_dl, cur_grant, cur_rnti, result);
+			int ret = run_rar_decode(cur_format, cur_ran_dci_dl, cur_grant, cur_rnti, result, ns);
 			if (ret == SRSRAN_SUCCESS)
 			{	
 				// connection_release_msg_send(cur_rnti);
@@ -403,7 +403,7 @@ int PDSCH_Decoder::decode_ul_mode(uint32_t rnti, std::vector<DL_Sniffer_rar_resu
 				int mimo_ret = SRSRAN_SUCCESS;
 				bool unknown_mcs;
 				/*Only uses 64QAM MCS table*/
-				int ret = run_decode(mimo_ret, cur_format, cur_ran_dci_dl, cur_grant, cur_rnti, "64QAM table", RNTI_name, tti);
+				int ret = run_decode(mimo_ret, cur_format, cur_ran_dci_dl, cur_grant, cur_rnti, "64QAM table", RNTI_name, tti, ns);
 				if (ret == UL_SNIFFER_FOUND_CON_SET)
 				{
 					found_con_ret = true;
@@ -537,7 +537,7 @@ int PDSCH_Decoder::decode_SIB() // change to decode SIB
 	return SRSRAN_SUCCESS;
 }
 
-int PDSCH_Decoder::decode_mac_ce(uint32_t rnti)
+int PDSCH_Decoder::decode_mac_ce(uint32_t rnti, uint64_t ns)
 {
 	uint32_t tti = sfn * 10 + sf_idx;
 	for (auto decoding_mem : (*ran_dl_collection))
@@ -565,10 +565,10 @@ int PDSCH_Decoder::decode_mac_ce(uint32_t rnti)
 			bool tb_en[SRSRAN_MAX_CODEWORDS]{cur_grant->tb[0].enabled, cur_grant->tb[1].enabled};
 			int mimo_ret = SRSRAN_SUCCESS;
 			bool unknown_mcs;
-			run_decode(mimo_ret, cur_format, cur_ran_dci_dl, cur_grant, cur_rnti, "64QAM table", RNTI_name, tti);
+			run_decode(mimo_ret, cur_format, cur_ran_dci_dl, cur_grant, cur_rnti, "64QAM table", RNTI_name, tti, ns);
 			if (!pdsch_res[0].crc && !pdsch_res[1].crc)
 			{
-				run_decode(mimo_ret, cur_format, cur_ran_dci_dl, cur_grant256, cur_rnti, "256QAM table", RNTI_name, tti);
+				run_decode(mimo_ret, cur_format, cur_ran_dci_dl, cur_grant256, cur_rnti, "256QAM table", RNTI_name, tti, ns);
 			}
 		}
 	} // end of decoding loop
@@ -614,7 +614,7 @@ const std::string currentDateTime() {
     return buf;
 }
 
-int PDSCH_Decoder::unpack_rar_response_ul_mode(uint8_t *payload, int length, DL_Sniffer_rar_result &result)
+int PDSCH_Decoder::unpack_rar_response_ul_mode(uint8_t *payload, int length, DL_Sniffer_rar_result &result, uint64_t ns)
 {
 
 	int ret = SRSRAN_ERROR;
@@ -642,29 +642,27 @@ int PDSCH_Decoder::unpack_rar_response_ul_mode(uint8_t *payload, int length, DL_
 			ul_sf.tti = dl_sf->tti;
 			ul_sniffer_ra_ul_dci_to_grant(&falcon_ue_dl->q->cell, &ul_sf, &hopping_cfg, &dci_ul, &result.ran_ul_grant);
 			rntiManager.activateAndRefresh(result.t_crnti, 0, ActivationReason::RM_ACT_RAR); // add RNTI in RAR response to active list
-			std::cout << " RAR: " << "TA = " << result.ta << std::endl;
-			uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+			// std::cout << " RAR: " << "TA = " << result.ta << std::endl;
+			// uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
             printf("RAR - Sniffer Received - %lu\n", ns);
             std::ofstream myfile;
-            myfile.open ("timing.csv", std::ios_base::app);
+            myfile.open ("timing_sniffer.csv", std::ios_base::app);
             if (myfile.is_open()) { // Check if the file is successfully opened
                 myfile << "RAR,Sniffer Received," << ns << std::endl; // Write data to the file
                 myfile.close(); // Close the file
-                std::cout << "Data written to timing.csv successfully." << std::endl; // Optional: Print a success message
+                std::cout << "Data written to timing_sniffer.csv successfully." << std::endl; // Optional: Print a success message
             } else {
                 std::cerr << "Error opening file." << std::endl; // Print an error message if the file couldn't be opened
             }
 			double distance_ta = ((16 * 0.5 * 3 * std::pow(10,8))*(result.ta) /(15000*2048));
-			std::cout << "currentDateTime()=" << currentDateTime() << std::endl;
-			printf("current time in epoch %lu\n", ltetimer->nanos());
+			// std::cout << "currentDateTime()=" << currentDateTime() << std::endl;
+			// printf("current time in epoch %lu\n", ltetimer->nanos());
 			std::cout << " Distance with TA " << " = " << distance_ta << "\n";
-			std::cout << " -- T-CRNTI: " << result.t_crnti;
-			std::cout << " -- GRANT: ";
+			// std::cout << " -- T-CRNTI: " << result.t_crnti;
+			// std::cout << " -- GRANT: ";
 			for (int g = 0; g < 20; g++){
 				std::cout << unsigned(result.grant[g]) << " ";
 			}
-// 1709070835725331670
-// 1709074435000000000
 			std::cout << std::endl;
 			ret = SRSRAN_SUCCESS;
 		}
@@ -676,7 +674,7 @@ int PDSCH_Decoder::run_rar_decode(srsran_dci_format_t cur_format,
 								  srsran_dci_dl_t *cur_ran_dci_dl,
 								  srsran_pdsch_grant_t *cur_grant,
 								  uint32_t cur_rnti,
-								  DL_Sniffer_rar_result &result)
+								  DL_Sniffer_rar_result &result, uint64_t ns)
 {
 	// std::cout << "Runing table: " << table << std::endl;
 	std::string RNTI_name = "RA_RNTI";
@@ -729,7 +727,7 @@ int PDSCH_Decoder::run_rar_decode(srsran_dci_format_t cur_format,
 					time_str.push_back(time[idx]);
 				}
 				time_str = "[" + time_str + "]";
-				unpack_rar_response_ul_mode(pdsch_res->payload, result_length, result);
+				unpack_rar_response_ul_mode(pdsch_res->payload, result_length, result, ns);
 				return SRSASN_SUCCESS;
 			}
 		}
@@ -742,7 +740,7 @@ int PDSCH_Decoder::run_rar_decode(srsran_dci_format_t cur_format,
 	}
 }
 
-int PDSCH_Decoder::decode_rar(DL_Sniffer_rar_result &result)
+int PDSCH_Decoder::decode_rar(DL_Sniffer_rar_result &result, uint64_t ns)
 {
 	uint32_t tti = sfn * 10 + sf_idx;
 	int ret = SRSRAN_ERROR;
@@ -771,7 +769,7 @@ int PDSCH_Decoder::decode_rar(DL_Sniffer_rar_result &result)
 			bool unknown_mcs;
 
 			/*rar uses 64QAM table*/
-			int decode_ret = run_rar_decode(cur_format, cur_ran_dci_dl, cur_grant, cur_rnti, result);
+			int decode_ret = run_rar_decode(cur_format, cur_ran_dci_dl, cur_grant, cur_rnti, result, ns);
 			if (decode_ret == SRSRAN_SUCCESS)
 			{
 				ret = SRSRAN_SUCCESS;
@@ -804,7 +802,7 @@ void print_dl_grant_dci(srsran_dci_dl_t &dl_dci, uint16_t tti, uint16_t rnti)
 	std::cout << "[DCI] SF: " << tti / 10 << ":" << tti % 10 << "-RNTI: " << rnti << " -Format: " << dl_dci.format << " -MCS: " << dl_dci.tb[0].mcs_idx << " -RV: " << dl_dci.tb[0].rv << std::endl;
 }
 
-int PDSCH_Decoder::decode_dl_mode()
+int PDSCH_Decoder::decode_dl_mode(uint64_t ns)
 {
 	uint32_t tti = sfn * 10 + sf_idx;
 	// printf("[%d] SF: %d-%d Nof_DCI = %d \n", idx, sfn, sf_idx, ran_dl_collection->size());
@@ -981,7 +979,7 @@ int PDSCH_Decoder::decode_dl_mode()
 										uint8_t *sdu_ptr = pdu.get()->get_sdu_ptr();
 										/* Decode RRC Connection Setup to obtain UE Specific Configuration*/
 										gAttack_ue_spec_config_t ue_config = {};
-										int rrc_ret = decode_rrc_connection_setup(sdu_ptr, payload_length, &ue_config);
+										int rrc_ret = decode_rrc_connection_setup(sdu_ptr, payload_length, &ue_config, ns);
 										if (rrc_ret == SRSRAN_SUCCESS)
 										{ // success means RRC Connection Setup
 											if (!mcs_tracking->check_default_config())
@@ -1068,7 +1066,7 @@ int PDSCH_Decoder::decode_dl_mode()
 										uint8_t *sdu_ptr = pdu.get()->get_sdu_ptr();
 										/* Decode RRC Connection Setup to obtain UE Specific Configuration*/
 										gAttack_ue_spec_config_t ue_config = {};
-										int rrc_ret = decode_rrc_connection_setup(sdu_ptr, payload_length, &ue_config);
+										int rrc_ret = decode_rrc_connection_setup(sdu_ptr, payload_length, &ue_config, ns);
 										if (rrc_ret == SRSRAN_SUCCESS)
 										{ // success means RRC Connection Setup
 											if (!mcs_tracking->check_default_config())

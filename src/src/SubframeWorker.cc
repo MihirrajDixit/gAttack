@@ -183,16 +183,17 @@ void SubframeWorker::work()
   dciSearch.setShortcutDiscovery(common.getShortcutDiscovery());
 
   int snr_ret = SRSRAN_SUCCESS;
-
+  uint64_t ns;
   switch (sniffer_mode)
   {
   case DL_MODE:
+    ns = ltetimer->nanos();
     snr_ret = dciSearch.search();
     if (snr_ret == SRSRAN_SUCCESS)
     {                                        // only decode when SNR > 5 dB
       stats += dciSearch.getStats();         // worker-specific statistics
       common.addStats(dciSearch.getStats()); // common statistics
-      run_dl_mode(subframeInfo);
+      run_dl_mode(subframeInfo, ns);
     }
     else
     {
@@ -200,6 +201,7 @@ void SubframeWorker::work()
     }
     break;
   case UL_MODE:
+    ns = ltetimer->nanos();
     dciSearch.prepareDCISearch(); // set single antenna for DL in the UL Sniffer mode
     snr_ret = dciSearch.search();
     if (snr_ret == SRSRAN_SUCCESS)
@@ -207,7 +209,7 @@ void SubframeWorker::work()
       stats += dciSearch.getStats();         // worker-specific statistics
       common.addStats(dciSearch.getStats()); // common statistics
       subframeInfo.getSubframePower().computePower(enb_ul.sf_symbols);
-      run_ul_mode(subframeInfo, tti);
+      run_ul_mode(subframeInfo, tti, ns);
     }
     else
     {
@@ -239,7 +241,7 @@ cf_t *SubframeWorker::getBuffer(uint32_t antenna_idx)
   return sfb.sf_buffer[antenna_idx];
 }
 
-void SubframeWorker::run_dl_mode(SubframeInfo &subframeInfo)
+void SubframeWorker::run_dl_mode(SubframeInfo &subframeInfo, uint64_t ns)
 {
   printf("Entered RUN DL Mode\n");
   pdschdecoder->init_pdsch_decoder(&falcon_ue_dl,
@@ -249,10 +251,10 @@ void SubframeWorker::run_dl_mode(SubframeInfo &subframeInfo)
                                    sfn,
                                    sf_idx);
   /*Start decoding PDSCH*/
-  pdschdecoder->decode_dl_mode();
+  pdschdecoder->decode_dl_mode(ns);
 }
 
-void SubframeWorker::run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti)
+void SubframeWorker::run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti, uint64_t ns)
 {
   // printf("Entered RUN UL Mode\n");
   if (!ulsche->get_config())
@@ -313,7 +315,7 @@ void SubframeWorker::run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti)
 
       /*Create a vector to contain RAR decoding result*/
       std::vector<DL_Sniffer_rar_result> rar_result;
-      int ret = pdschdecoder->decode_ul_mode(ulsche->get_rnti(), &rar_result);
+      int ret = pdschdecoder->decode_ul_mode(ulsche->get_rnti(), &rar_result, ns);
 
       /*Get Uplink and Downlink dci and grant lists*/
       std::vector<DCI_UL> dci_ul = subframeInfo.getDCICollection().getULSnifferDCI_UL();            // get UL DCI0 list
@@ -366,7 +368,7 @@ void SubframeWorker::run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti)
                                        ul_sf,
                                        &subframeInfo.getSubframePower());\
       uint64_t ns = ltetimer->nanos();
-      puschdecoder->decode();         // decode PUSCH
+      puschdecoder->decode(ns);         // decode PUSCH
       puschdecoder->work_prach(ns);     // decode PRACH
       ulsche->deleteULSche(tti);      // delete current DCI0 list and uplink grant in the database after decoding
       ulsche->delete_rar_ULSche(tti); // also for RAR grant

@@ -44,8 +44,8 @@ public:
   void                  set_sniffer_mode(int sniffer_mode_) { sniffer_mode = sniffer_mode_;}
   void                  set_pdsch_uecfg(srsran_pdsch_cfg_t* pdsch_cfg);
   void                  set_ue_dl_uecfg(srsran_ue_dl_cfg_t* ue_dl_cfg);
-  void                  run_dl_mode(SubframeInfo &subframeInfo);
-  void                  run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti);
+  void                  run_dl_mode(SubframeInfo &subframeInfo, uint64_t ns);
+  void                  run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti, uint64_t ns);
   void                  set_ul_harq(UL_HARQ *ul_harq_){ ul_harq = ul_harq_;}
   void                  print_nof_DCI(SubframeInfo &subframeInfo, uint32_t tti);
   DCIBlindSearchStats&  getStats();

@@ -46,7 +46,7 @@ PUSCH_Decoder::~PUSCH_Decoder()
     srsran_softbuffer_rx_free(ul_cfg.pusch.softbuffers.rx);
 }
 
-int PUSCH_Decoder::decode_rrc_connection_request(DCI_UL &decoding_mem, uint8_t *sdu_ptr, int length)
+int PUSCH_Decoder::decode_rrc_connection_request(DCI_UL &decoding_mem, uint8_t *sdu_ptr, int length, uint64_t ns)
 {
     int ret = SRSRAN_ERROR;
     ul_ccch_msg_s ul_ccch_msg;
@@ -56,14 +56,14 @@ int PUSCH_Decoder::decode_rrc_connection_request(DCI_UL &decoding_mem, uint8_t *
     {
         if (ul_ccch_msg.msg.c1().type().value == ul_ccch_msg_type_c::c1_c_::types::rrc_conn_request)
         {
-            uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+            // uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
             printf("RRC Connection Request - Sniffer Received - %lu\n", ns);
             std::ofstream myfile;
-            myfile.open ("timing.csv", std::ios_base::app);
+            myfile.open ("timing_sniffer.csv", std::ios_base::app);
             if (myfile.is_open()) { // Check if the file is successfully opened
                 myfile << "RRC Connection Request,Sniffer Received," << ns << std::endl; // Write data to the file
                 myfile.close(); // Close the file
-                std::cout << "Data written to timing.csv successfully." << std::endl; // Optional: Print a success message
+                std::cout << "Data written to timing_sniffer.csv successfully." << std::endl; // Optional: Print a success message
             } else {
                 std::cerr << "Error opening file." << std::endl; // Print an error message if the file couldn't be opened
             }
@@ -106,7 +106,7 @@ int PUSCH_Decoder::decode_rrc_connection_request(DCI_UL &decoding_mem, uint8_t *
 }
 
 /*UEcapability information or RRC Connection Setup Complete + Attach request*/
-int PUSCH_Decoder::decode_ul_dcch(DCI_UL &decoding_mem, uint8_t *sdu_ptr, int length)
+int PUSCH_Decoder::decode_ul_dcch(DCI_UL &decoding_mem, uint8_t *sdu_ptr, int length, uint64_t ns)
 {
     int ret = SRSRAN_ERROR;
     ul_dcch_msg_s ul_dcch_msg;
@@ -123,14 +123,14 @@ int PUSCH_Decoder::decode_ul_dcch(DCI_UL &decoding_mem, uint8_t *sdu_ptr, int le
         }
         else if (ul_dcch_msg.msg.c1().type() == ul_dcch_msg_type_c::c1_c_::types::rrc_conn_setup_complete && (api_mode == 2 || api_mode == 3))
         { // IMSI catching, IMSI attach
-            uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+            // uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
             printf("RRC Connection Setup Complete - Sniffer Received - %lu\n", ns);
             std::ofstream myfile;
-            myfile.open ("timing.csv", std::ios_base::app);
+            myfile.open ("timing_sniffer.csv", std::ios_base::app);
             if (myfile.is_open()) { // Check if the file is successfully opened
                 myfile << "RRC Connection Setup Complete,Sniffer Received," << ns << std::endl; // Write data to the file
                 myfile.close(); // Close the file
-                std::cout << "Data written to timing.csv successfully." << std::endl; // Optional: Print a success message
+                std::cout << "Data written to timing_sniffer.csv successfully." << std::endl; // Optional: Print a success message
             } else {
                 std::cerr << "Error opening file." << std::endl; // Print an error message if the file couldn't be opened
             }
@@ -271,7 +271,7 @@ int PUSCH_Decoder::decode_nas_ul(DCI_UL &decoding_mem, uint8_t *sdu_ptr, int len
 }
 
 /* Run decode function after setup config, grant*/
-void PUSCH_Decoder::decode_run(std::string info, DCI_UL &decoding_mem, std::string modulation_mode, float falcon_signal_power)
+void PUSCH_Decoder::decode_run(std::string info, DCI_UL &decoding_mem, std::string modulation_mode, float falcon_signal_power, uint64_t ns)
 {
     int mcs_idx = ul_cfg.pusch.grant.tb.mcs_idx;
     srsran_softbuffer_rx_reset_tbs(ul_cfg.pusch.softbuffers.rx, ul_cfg.pusch.grant.tb.tbs);
@@ -342,7 +342,7 @@ void PUSCH_Decoder::decode_run(std::string info, DCI_UL &decoding_mem, std::stri
                     int payload_length = pdu.get()->get_payload_size();
                     uint8_t *sdu_ptr = pdu.get()->get_sdu_ptr();
                     /* Decode RRC Connection Request when found valid sdu from MAC pdu*/
-                    ret = decode_rrc_connection_request(decoding_mem, sdu_ptr, payload_length);
+                    ret = decode_rrc_connection_request(decoding_mem, sdu_ptr, payload_length, ns);
                 }
             }
             if (ret == SRSRAN_SUCCESS)
@@ -390,7 +390,7 @@ void PUSCH_Decoder::decode_run(std::string info, DCI_UL &decoding_mem, std::stri
                                 // pdcp_pdu->N_bytes   -= 1;
 
                                 /* Decode UL DCCH messages*/
-                                api_ret = decode_ul_dcch(decoding_mem, pdcp_pdu->msg, pdcp_pdu->N_bytes);
+                                api_ret = decode_ul_dcch(decoding_mem, pdcp_pdu->msg, pdcp_pdu->N_bytes, ns);
                             }
                         }
                     }
@@ -410,7 +410,7 @@ void print_ul_grant_dci_0(srsran_pusch_grant_t &ul_grant, uint16_t tti, uint16_t
     std::cout << "[DCI] SF: " << tti / 10 << ":" << tti % 10 << "-RNTI: " << rnti << " -L_prb: " << ul_grant.L_prb << " -MOD: " << ul_grant.tb.mod << " -tbs: " << ul_grant.tb.tbs << " -RV: " << ul_grant.tb.rv << std::endl;
 }
 
-void PUSCH_Decoder::decode()
+void PUSCH_Decoder::decode(uint64_t ns)
 {
     enb_ul.in_buffer = original_buffer[1]; // 0 for downlink, 1 for uplink
     srsran_enb_ul_fft(&enb_ul);            // run FFT to uplink samples
@@ -485,13 +485,13 @@ void PUSCH_Decoder::decode()
                         decoding_mem.mcs_mod = UL_SNIFFER_16QAM_MAX;
                         ul_cfg.pusch.enable_64qam = false;
                         modulation_mode = modulation_mode_string(mcs_idx, false);
-                        decode_run("[PUSCH-16 ]", decoding_mem, modulation_mode, 0);
+                        decode_run("[PUSCH-16 ]", decoding_mem, modulation_mode, 0, ns);
                         break;
                     case UL_SNIFFER_64QAM_MAX:
                         decoding_mem.mcs_mod = UL_SNIFFER_64QAM_MAX;
                         ul_cfg.pusch.enable_64qam = true;
                         modulation_mode = modulation_mode_string(mcs_idx, true);
-                        decode_run("[PUSCH-64 ]", decoding_mem, modulation_mode, 0);
+                        decode_run("[PUSCH-64 ]", decoding_mem, modulation_mode, 0, ns);
                         break;
                     case UL_SNIFFER_256QAM_MAX:
                         decoding_mem.mcs_mod = UL_SNIFFER_256QAM_MAX;
@@ -500,7 +500,7 @@ void PUSCH_Decoder::decode()
                         ul_cfg.pusch.grant = *decoding_mem.ran_ul_grant_256.get();
                         if (ul_cfg.pusch.grant.L_prb < 110 && ul_cfg.pusch.grant.L_prb > 0)
                         {
-                            decode_run("[PUSCH-256]", decoding_mem, modulation_mode, 0);
+                            decode_run("[PUSCH-256]", decoding_mem, modulation_mode, 0, ns);
                         }
                         break;
                     case UL_SNIFFER_UNKNOWN_MOD:
@@ -519,7 +519,7 @@ void PUSCH_Decoder::decode()
                                 tmp_sum += sf_power->getRBPowerUL().at(ul_cfg.pusch.grant.n_prb[0] + rb_idx);
                             }
                             falcon_signal_power = tmp_sum / ul_cfg.pusch.grant.L_prb;
-                            decode_run("[PUSCH-16 ]", decoding_mem, modulation_mode, falcon_signal_power);
+                            decode_run("[PUSCH-16 ]", decoding_mem, modulation_mode, falcon_signal_power, ns);
 
                             if (pusch_res.crc == false && mcs_idx > 20)
                             {
@@ -529,7 +529,7 @@ void PUSCH_Decoder::decode()
                                 ul_cfg.pusch.meas_ta_en = true;   // enable ta measurement
                                 ul_cfg.pusch.grant = *decoding_mem.ran_ul_grant;
 
-                                decode_run("[PUSCH-64 ]", decoding_mem, modulation_mode, falcon_signal_power);
+                                decode_run("[PUSCH-64 ]", decoding_mem, modulation_mode, falcon_signal_power, ns);
 
                                 if (pusch_res.crc == false)
                                 { // try 256QAM table if 2 cases above failed
@@ -540,7 +540,7 @@ void PUSCH_Decoder::decode()
                                     modulation_mode = modulation_mode_string_256(mcs_idx);
                                     if (ul_cfg.pusch.grant.L_prb < 110 && ul_cfg.pusch.grant.L_prb > 0)
                                     {
-                                        decode_run("[PUSCH-256]", decoding_mem, modulation_mode, 0);
+                                        decode_run("[PUSCH-256]", decoding_mem, modulation_mode, 0, ns);
                                     }
                                 }
                             }
@@ -562,7 +562,7 @@ void PUSCH_Decoder::decode()
                     case UL_SNIFFER_64QAM_MAX:
                         ul_cfg.pusch.enable_64qam = false;
                         modulation_mode = modulation_mode_string(mcs_idx, false);
-                        decode_run("[PUSCH-16 ]", decoding_mem, modulation_mode, 0);
+                        decode_run("[PUSCH-16 ]", decoding_mem, modulation_mode, 0, ns);
                         break;
                     case UL_SNIFFER_256QAM_MAX:
                         ul_cfg.pusch.enable_64qam = true;
@@ -570,13 +570,13 @@ void PUSCH_Decoder::decode()
                         modulation_mode = modulation_mode_string_256(mcs_idx);
                         if (ul_cfg.pusch.grant.L_prb < 110 && ul_cfg.pusch.grant.L_prb > 0)
                         {
-                            decode_run("[PUSCH-256]", decoding_mem, modulation_mode, 0);
+                            decode_run("[PUSCH-256]", decoding_mem, modulation_mode, 0, ns);
                         }
                         break;
                     case UL_SNIFFER_UNKNOWN_MOD:
                         ul_cfg.pusch.enable_64qam = false;
                         modulation_mode = modulation_mode_string(mcs_idx, false);
-                        decode_run("[PUSCH-16 ]", decoding_mem, modulation_mode, 0);
+                        decode_run("[PUSCH-16 ]", decoding_mem, modulation_mode, 0, ns);
                         if (pusch_res.crc == false)
                         { // try 256QAM table if case above failed
                             ul_cfg.pusch.grant = *decoding_mem.ran_ul_grant_256;
@@ -584,7 +584,7 @@ void PUSCH_Decoder::decode()
                             if (ul_cfg.pusch.grant.L_prb < 110 && ul_cfg.pusch.grant.L_prb > 0)
                             {
                                 ul_cfg.pusch.enable_64qam = true;
-                                decode_run("[PUSCH-256]", decoding_mem, modulation_mode, 0);
+                                decode_run("[PUSCH-256]", decoding_mem, modulation_mode, 0, ns);
                             }
                         }
                     default:
@@ -725,7 +725,7 @@ void PUSCH_Decoder::work_prach(uint64_t ns)
                 }
                 printf("Mytime : %lu\n", ns);
                 prach_preamble_detected_time = ltetimer->nanos();
-                uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+                // uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
                 // printf("PRACH Preamble Detected Time: %lu\n", prach_preamble_detected_time);
                 printf("PRACH: %d/%d, preamble=%d, offset=%.1f us, peak2avg=%.1f, preamble_detected_time: %lu \n",
                     i + 1,
@@ -736,11 +736,11 @@ void PUSCH_Decoder::work_prach(uint64_t ns)
                 
                 printf("Preamble %d - Sniffer Received - %lu\n", prach_indices[i], ns);
                 std::ofstream myfile;
-                myfile.open ("timing.csv", std::ios_base::app);
+                myfile.open ("timing_sniffer.csv", std::ios_base::app);
                 if (myfile.is_open()) { // Check if the file is successfully opened
                     myfile << "PRACH Preamble " << prach_indices[i] << ",Sniffer Received," << ns << std::endl;
                     myfile.close(); // Close the file
-                    std::cout << "Data written to timing.csv successfully." << std::endl; // Optional: Print a success message
+                    std::cout << "Data written to timing_sniffer.csv successfully." << std::endl; // Optional: Print a success message
                 } else {
                 std::cerr << "Error opening file." << std::endl; // Print an error message if the file couldn't be opened
                 }

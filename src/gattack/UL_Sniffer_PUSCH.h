@@ -61,10 +61,10 @@ public:
                             std::vector<DCI_UL>* rar_dci_ul,
                             srsran_ul_sf_cfg_t &ul_sf,
                             SubframePower* sf_power);
-    void decode();
+    void decode(uint64_t ns);
 
-    int  decode_rrc_connection_request(DCI_UL &decoding_mem, uint8_t* sdu_ptr, int length);
-    int  decode_ul_dcch(DCI_UL &decoding_mem, uint8_t* sdu_ptr, int length);
+    int  decode_rrc_connection_request(DCI_UL &decoding_mem, uint8_t* sdu_ptr, int length, uint64_t ns);
+    int  decode_ul_dcch(DCI_UL &decoding_mem, uint8_t* sdu_ptr, int length, uint64_t ns);
     int  decode_nas_ul(DCI_UL &decoding_mem, uint8_t* sdu_ptr, int length);
     // void decode_IMSI_attach(DCI_UL &decoding_mem, uint8_t* sdu_ptr, int length);
     
@@ -72,7 +72,7 @@ public:
     int  check_valid_prb_ul(uint32_t nof_prb);
     int  investigate_valid_ul_grant(DCI_UL &decoding_mem);
 
-    void decode_run(std::string info, DCI_UL &decoding_mem, std::string mod, float falcon_signal_power);
+    void decode_run(std::string info, DCI_UL &decoding_mem, std::string mod, float falcon_signal_power, uint64_t ns);
 
     void set_configed() { configed = true;}
     bool get_configed() { return configed;}
