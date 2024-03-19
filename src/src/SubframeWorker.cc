@@ -364,15 +364,10 @@ void SubframeWorker::run_ul_mode(SubframeInfo &subframeInfo, uint32_t tti)
       puschdecoder->init_pusch_decoder(ulsche->getULSche(tti),
                                        ulsche->get_rar_ULSche(tti),
                                        ul_sf,
-                                       &subframeInfo.getSubframePower());
+                                       &subframeInfo.getSubframePower());\
+      uint64_t ns = ltetimer->nanos();
       puschdecoder->decode();         // decode PUSCH
-      puschdecoder->work_prach();     // decode PRACH
-      if (pdschdecoder->rar_timing > 0 && puschdecoder->prach_preamble_detected_time > 0){
-        if (pdschdecoder->rar_timing > puschdecoder->prach_preamble_detected_time){
-          uint64_t diff_rar_prach = pdschdecoder->rar_timing - puschdecoder->prach_preamble_detected_time;
-          printf("Timing Difference between PRACH and RAR is %lu", diff_rar_prach);
-        }
-      }
+      puschdecoder->work_prach(ns);     // decode PRACH
       ulsche->deleteULSche(tti);      // delete current DCI0 list and uplink grant in the database after decoding
       ulsche->delete_rar_ULSche(tti); // also for RAR grant
     }

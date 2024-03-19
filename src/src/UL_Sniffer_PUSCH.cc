@@ -693,7 +693,7 @@ void PUSCH_Decoder::set_rach_config(srsran_prach_cfg_t prach_cfg_)
     nof_sf = (uint32_t)ceilf(prach.T_tot * 1000);
 }
 
-void PUSCH_Decoder::work_prach()
+void PUSCH_Decoder::work_prach(uint64_t ns)
 {
     uint32_t prach_nof_det = 0;
     if (srsran_prach_tti_opportunity(&prach, ul_sf.tti, -1))
@@ -723,6 +723,7 @@ void PUSCH_Decoder::work_prach()
                     peak = prach_p2avg[i];
                     max_idx = i;
                 }
+                printf("Mytime : %lu\n", ns);
                 prach_preamble_detected_time = ltetimer->nanos();
                 uint64_t ns = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
                 // printf("PRACH Preamble Detected Time: %lu\n", prach_preamble_detected_time);

@@ -94,7 +94,7 @@ public:
 
     void set_rach_config(srsran_prach_cfg_t prach_cfg_);
 
-    void work_prach(); 
+    void work_prach(uint64_t ns); 
 
     void set_ul_harq (UL_HARQ *ul_harq_) { ul_harq = ul_harq_;  }
     void set_target_rnti(uint16_t rnti)  {

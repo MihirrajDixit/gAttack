@@ -18,7 +18,7 @@ public:
     // Get time stamp in microseconds.
     uint64_t micros();
     // Get time stamp in nanoseconds.
-    static uint64_t nanos();
+    uint64_t nanos();
     // uint64_t ul_rach_time;
     // uint64_t dl_rar_time;
 private:
